@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.fd</groupId>
+    <groupId>org.fd</groupId>
     <artifactId>super-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>super-common</name>
