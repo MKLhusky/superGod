@@ -15,11 +15,17 @@
     <groupId>org.fd</groupId>
     <artifactId>superGod</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.v}</version>
 
+    <!--全局版本控制-->
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <java.versions>17</java.versions>
+        <project.v>1.0-SNAPSHOT</project.v>
+        <druid.v>1.2.16</druid.v>
+        <mysql.v>8.0.32</mysql.v>
+        <mybatis.v>3.0.1</mybatis.v>
     </properties>
 
 
@@ -28,5 +34,49 @@
         <module>system/super-common</module>
         <module>system/super-system</module>
     </modules>
+
+    <!--全局依赖申明-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!--系统公共基础包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>super-common</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
+            <!--系统核心功能包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>super-system</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
+            <!--数据库连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.v}</version>
+            </dependency>
+
+            <!--mysql连接-->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.v}</version>
+            </dependency>
+
+            <!--orm框架-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.v}</version>
+            </dependency>
+
+
+
+        </dependencies>
+    </dependencyManagement>
 
 </project>
