@@ -33,6 +33,9 @@
         <module>system</module>
         <module>system/super-common</module>
         <module>system/super-system</module>
+        <module>super-daily-attendance</module>
+        <module>super-daily-attendance/interface-api</module>
+        <module>super-daily-attendance/daily-attendance</module>
     </modules>
 
     <!--全局依赖申明-->
