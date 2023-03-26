@@ -12,16 +12,8 @@
 
     <groupId>org.fd</groupId>
     <artifactId>super-daily-attendance</artifactId>
+    <version>${project.v}</version>
+    <name>super-daily-attendance</name>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>interface-api</module>
-        <module>daily-attendance</module>
-    </modules>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
 </project>

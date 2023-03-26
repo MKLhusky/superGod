@@ -26,6 +26,7 @@
         <druid.v>1.2.16</druid.v>
         <mysql.v>8.0.32</mysql.v>
         <mybatis.v>3.0.1</mybatis.v>
+        <lombok.v>1.18.24</lombok.v>
     </properties>
 
 
@@ -56,6 +57,20 @@
                 <version>${project.v}</version>
             </dependency>
 
+            <!--打开系统对外接口包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>interface-api</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
+            <!--打开系统对外接口包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>daily-attendance</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
             <!--数据库连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -77,8 +92,12 @@
                 <version>${mybatis.v}</version>
             </dependency>
 
-
-
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.v}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -3,17 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>super-daily-attendance</artifactId>
         <groupId>org.fd</groupId>
+        <artifactId>super-daily-attendance</artifactId>
         <version>${project.v}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>super-interface-api</artifactId>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <artifactId>interface-api</artifactId>
+    <version>${project.v}</version>
+    <groupId>org.fd</groupId>
+    <name>interface-api</name>
+    <description>开放接口</description>
 
 </project>
