@@ -57,14 +57,14 @@
                 <version>${project.v}</version>
             </dependency>
 
-            <!--打开系统对外接口包-->
+            <!--打卡系统对外接口包-->
             <dependency>
                 <groupId>org.fd</groupId>
                 <artifactId>interface-api</artifactId>
                 <version>${project.v}</version>
             </dependency>
 
-            <!--打开系统对外接口包-->
+            <!--打卡系统功能模块-->
             <dependency>
                 <groupId>org.fd</groupId>
                 <artifactId>daily-attendance</artifactId>
