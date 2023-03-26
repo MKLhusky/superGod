@@ -37,6 +37,8 @@
         <module>super-daily-attendance</module>
         <module>super-daily-attendance/interface-api</module>
         <module>super-daily-attendance/daily-attendance</module>
+        <module>settings</module>
+        <module>settings/super-database</module>
     </modules>
 
     <!--全局依赖申明-->
@@ -54,6 +56,13 @@
             <dependency>
                 <groupId>org.fd</groupId>
                 <artifactId>super-system</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
+            <!--数据库连接包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>super-database</artifactId>
                 <version>${project.v}</version>
             </dependency>
 

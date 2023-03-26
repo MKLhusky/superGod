@@ -1,10 +1,13 @@
-package com.system.supercommon.datasource;
+package org.fd;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+@Configuration
 @ConfigurationProperties("spring.datasource.druid")
 public class SourceProperties {
     private int initialSize=5;

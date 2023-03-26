@@ -9,10 +9,10 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.fd</groupId>
     <artifactId>super-system</artifactId>
     <version>${project.v}</version>
     <name>super-system</name>
+    <packaging>jar</packaging>
     <description>系统核心模块</description>
 
 
@@ -23,33 +23,14 @@
             <artifactId>super-common</artifactId>
         </dependency>
 
-        <!--阿里开源数据库连接池-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <groupId>org.fd</groupId>
+            <artifactId>super-database</artifactId>
         </dependency>
 
-        <!--spring事务等  druid也需要依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <!--spring 自动配置-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-
-        <!--数据库连接-->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
-
-        <!--orm框架-->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--springboot测试包-->
@@ -60,6 +41,8 @@
         </dependency>
     </dependencies>
 
+
+
     <build>
         <plugins>
             <plugin>
@@ -67,6 +50,28 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <resources>
+            <!--<resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                &lt;!&ndash;注意 exculde会将匹配到文件排除在编译以后的结果之外，因此下面会再有一个
+                filtering 的模块，再通过include的形式，将xlsx文件再如引入进来&ndash;&gt;
+                <excludes>
+                    <exclude>**/*.xlsx</exclude>
+                    <exclude>**/*.docx</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.xlsx</include>
+                    <include>**/*.docx</include>
+                </includes>
+            </resource>-->
+        </resources>
+
     </build>
 
 </project>

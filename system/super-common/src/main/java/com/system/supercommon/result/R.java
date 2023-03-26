@@ -1,8 +1,6 @@
 package com.system.supercommon.result;
 
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -12,7 +10,7 @@ public class R<T> implements Serializable {
 
     private static final String FAIL_MSG = "操作成功";
 
-    private int code = HttpStatus.OK.value();
+    private int code = 200;
 
     private String msg = SUCCESS_MSG;
 
@@ -32,11 +30,11 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> success(T data){
-        return new R<T>(HttpStatus.OK.value(), SUCCESS_MSG, data);
+        return new R<T>(200, SUCCESS_MSG, data);
     }
 
     public static <T> R<T> success(String msg, T data){
-        return new R<T>(HttpStatus.OK.value(), msg, data);
+        return new R<T>(200, msg, data);
     }
 
     public static <T> R<T> success(int code, String msg, T data){
@@ -52,7 +50,7 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> fail(String msg){
-        return new R<T>(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg, null);
+        return new R<T>(500, msg, null);
     }
 
     public static <T> R<T> fail(int code, String msg){
