@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  **/
 @Getter
 @Setter
-public class ParentPo {
+public class ParentPO {
 
     private LocalDateTime createTime;
 
