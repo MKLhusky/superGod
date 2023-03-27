@@ -31,14 +31,22 @@
 
 
     <modules>
+        <!--系统模块-->
         <module>system</module>
         <module>system/super-common</module>
         <module>system/super-system</module>
+        <!--打卡系统-->
         <module>super-daily-attendance</module>
         <module>super-daily-attendance/interface-api</module>
         <module>super-daily-attendance/daily-attendance</module>
+        <!--配置模块-->
         <module>settings</module>
         <module>settings/super-database</module>
+
+        <!--系统用户模块-->
+        <module>system/super-system/super-user</module>
+        <module>system/super-system/super-user/user</module>
+        <module>system/super-system/super-user/user-api</module>
     </modules>
 
     <!--全局依赖申明-->

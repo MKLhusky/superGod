@@ -2,33 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
+        <artifactId>super-user</artifactId>
         <groupId>org.fd</groupId>
-        <artifactId>super-daily-attendance</artifactId>
         <version>${project.v}</version>
     </parent>
+
+
     <groupId>org.fd</groupId>
-    <artifactId>daily-attendance</artifactId>
+    <artifactId>user</artifactId>
     <version>${project.v}</version>
-    <name>daily-attendance</name>
+    <name>super-user</name>
+    <description>系统用户核心模块</description>
+
+
 
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--springboot web包 mvc等-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.fd</groupId>
+            <artifactId>super-database</artifactId>
         </dependency>
 
         <dependency>
@@ -38,8 +33,15 @@
 
         <dependency>
             <groupId>org.fd</groupId>
-            <artifactId>interface-api</artifactId>
+            <artifactId>user-api</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

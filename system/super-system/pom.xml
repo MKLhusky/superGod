@@ -11,8 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>super-system</artifactId>
     <version>${project.v}</version>
+
+
     <name>super-system</name>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>系统核心模块</description>
 
 
