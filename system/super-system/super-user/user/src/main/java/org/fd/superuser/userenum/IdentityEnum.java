@@ -35,14 +35,4 @@ public enum IdentityEnum {
         return label;
     }
 
-    /**
-     * @Author: Mr. Dai
-     * @Description:  根据code值获取映射的枚举对象
-     * @Date: 22:07 2023/3/27
-     * @param code
-     **/
-    public static IdentityEnum getIdentity(Integer code){
-        Optional<IdentityEnum> identity = Arrays.asList(IdentityEnum.values()).stream().filter(x -> x.getCode().equals(code)).findFirst();
-        return identity.isPresent()?identity.get(): IdentityEnum.EMPTY;
-    }
 }

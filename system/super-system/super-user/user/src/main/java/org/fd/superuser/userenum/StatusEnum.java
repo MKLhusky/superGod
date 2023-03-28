@@ -1,5 +1,7 @@
 package org.fd.superuser.userenum;
 
+import com.system.supercommon.util.EnumUtils;
+
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -36,14 +38,10 @@ public enum StatusEnum {
         return label;
     }
 
-    /**
-     * @Author: Mr. Dai
-     * @Description:  根据code值获取映射的枚举对象
-     * @Date: 22:07 2023/3/27
-     * @param code
-     **/
-    public static StatusEnum getStatus(Integer code){
-        Optional<StatusEnum> status = Arrays.asList(StatusEnum.values()).stream().filter(x -> x.getCode().equals(code)).findFirst();
-        return status.isPresent()?status.get(): StatusEnum.EMPTY;
+    public static void main(String[] args) {
+        StatusEnum anEnum = EnumUtils.getEnum(StatusEnum.class, 2);
+        System.out.println(anEnum.getLabel());
     }
+
+
 }

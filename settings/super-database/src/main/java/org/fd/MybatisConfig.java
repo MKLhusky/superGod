@@ -1,6 +1,7 @@
 package org.fd;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.fd.jdbc.SqlUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,26 @@ public class MybatisConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+//    /**
+//     * @Author: Mr. Dai
+//     * @Description:  sqlSession模板
+//     * @Date: 18:18 2023/3/26
+//     * @param sessionFactory
+//     **/
+//    @Bean
+//    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sessionFactory){
+//        return new SqlSessionTemplate(sessionFactory);
+//    }
+
     /**
      * @Author: Mr. Dai
-     * @Description:  sqlSession模板
-     * @Date: 18:18 2023/3/26
-     * @param sessionFactory
+     * @Description:  项目公共简单sql执行工具
+     * @Date: 21:04 2023/3/28
+     * @param dataSource
      **/
     @Bean
-    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sessionFactory){
-        return new SqlSessionTemplate(sessionFactory);
+    public SqlUtils sqlUtils(DataSource dataSource){
+        return SqlUtils.getSqlUtils(dataSource);
     }
 
     /**

@@ -5,7 +5,6 @@ import com.system.supercommon.util.SnowFlake;
 import com.system.supersystem.dao.TestMapper;
 import com.system.supersystem.po.Test;
 import jakarta.annotation.Resource;
-import org.fd.util.SqlUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +34,6 @@ public class TestController {
 
         List<Test> list=new ArrayList<>();
         list.add(test);
-
-        SqlUtils.execute(list, TestMapper.class,(t,m)->m.insert(t));
-
 
         return R.success(testMapper.selectById(1089626834785202176L));
     }
