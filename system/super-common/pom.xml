@@ -34,6 +34,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!--spirngboot web服务-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+
 
         <!--查询是否有弃用属性-->
         <dependency>

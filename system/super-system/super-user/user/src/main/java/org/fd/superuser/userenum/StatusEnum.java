@@ -38,10 +38,4 @@ public enum StatusEnum {
         return label;
     }
 
-    public static void main(String[] args) {
-        StatusEnum anEnum = EnumUtils.getEnum(StatusEnum.class, 2);
-        System.out.println(anEnum.getLabel());
-    }
-
-
 }
