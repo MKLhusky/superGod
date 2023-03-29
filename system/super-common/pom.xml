@@ -15,8 +15,19 @@
     <packaging>jar</packaging>
     <description>公共基础服务模块</description>
 
+    <properties>
+        <jwt.v>4.3.0</jwt.v>
+    </properties>
+
 
     <dependencies>
+
+        <!--token生成工具-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.v}</version>
+        </dependency>
 
         <!--springboot核心包 自动配置 日志等-->
         <dependency>
