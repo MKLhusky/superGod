@@ -26,7 +26,7 @@
         <druid.v>1.2.16</druid.v>
         <mysql.v>8.0.32</mysql.v>
         <mybatis.v>3.0.1</mybatis.v>
-        <lombok.v>1.18.24</lombok.v>
+        <lombok.v>1.18.26</lombok.v>
         <codec.v>1.15</codec.v>
         <lang3.v>3.12.0</lang3.v>
     </properties>

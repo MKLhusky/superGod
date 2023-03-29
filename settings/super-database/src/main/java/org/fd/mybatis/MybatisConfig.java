@@ -1,4 +1,4 @@
-package org.fd;
+package org.fd.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fd.jdbc.SqlUtils;
@@ -72,6 +72,7 @@ public class MybatisConfig {
         //mybatis 配置
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(Boolean.valueOf(getMybatisProperty("mybatis.configuration.map-underscore-to-camel-case")));
+        configuration.setDefaultEnumTypeHandler(MybatisEnumHandler.class);
         sqlSessionFactoryBean.setConfiguration(configuration);
 
         return sqlSessionFactoryBean.getObject();

@@ -3,6 +3,7 @@ package org.fd.superuser.po;
 import com.system.supercommon.bean.ParentPO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.fd.superuser.userenum.IdentityEnum;
 import org.fd.superuser.userenum.SexEnum;
 import org.fd.superuser.userenum.StatusEnum;
@@ -13,6 +14,8 @@ import org.fd.superuser.userenum.StatusEnum;
  * @Date: 2023/3/27 22:00
  **/
 
+
+@Accessors(chain = true)
 @Getter
 @Setter
 public class UserBasePO extends ParentPO {

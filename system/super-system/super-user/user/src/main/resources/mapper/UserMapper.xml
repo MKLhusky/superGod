@@ -5,5 +5,4 @@
 
 <mapper namespace="org.fd.superuser.dao.UserDao">
 
-
 </mapper>

@@ -11,7 +11,7 @@ create table super_user.user_base
     password_salt     varchar(50) collate utf8mb4_bin                                                    null comment '密码盐',
     id_card           char(18) collate utf8mb4_bin                                                       null comment '身份证',
     sex               tinyint collate utf8mb4_bin                                                        null comment '性别(0 女 1男  2未知)',
-    identity          tinyint collate utf8mb4_bin                                                        not null comment '系统身份 (0 超管 1 管理  2 普通用户)',
+    identity          tinyint collate utf8mb4_bin  default 2                                             not null comment '系统身份 (0 超管 1 管理  2 普通用户)',
     business_identity bigint collate utf8mb4_bin                                                         null comment '业务身份标识',
     business_unique   bigint collate utf8mb4_bin                                                         null comment '业务唯一标识',
     status            tinyint collate utf8mb4_bin  default 0                                             not null comment '账号状态 (0 正常  1删除   2冻结  3异常)',

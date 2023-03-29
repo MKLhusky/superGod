@@ -2,6 +2,7 @@ package com.system.supercommon.bean;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  **/
 @Getter
 @Setter
+@Accessors(chain = true)
 public class ParentPO {
 
     private LocalDateTime createTime;
