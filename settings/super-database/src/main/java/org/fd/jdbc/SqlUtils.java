@@ -46,8 +46,9 @@ public class SqlUtils {
             log.info(buffer.toString());
         }
         ResultSet resultSet = null;
-        try {
-            resultSet = getConnection().createStatement().executeQuery(buffer.toString());
+        try (Connection connection = getConnection()){
+
+            resultSet = connection.createStatement().executeQuery(buffer.toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -118,8 +119,8 @@ public class SqlUtils {
             log.info(sql);
         }
 
-        Connection connection = getConnection();
-        try {
+
+        try (Connection connection = getConnection()){
             //执行sql
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
