@@ -123,14 +123,14 @@ public class SqlAssembly {
      * @param flag 是否开启预编译 true 开启 false 不开启
      * @param conditions
      **/
-    private static void assemblyCondition(StringBuffer buffer,boolean flag,SqlCondition... conditions){
+    protected static void assemblyCondition(StringBuffer buffer,boolean flag,SqlCondition... conditions){
         if(null!=conditions&&conditions.length>0){
             buffer.append(" where ");
             List<String> temp=new ArrayList<>();
             for (SqlCondition condition : conditions) {
                 temp.add(String.format("%s = %s",StringUtils.toSnake(condition.getName()),flag?"?":condition.getValue()));
             }
-            buffer.append(temp.stream().collect(Collectors.joining(",")));
+            buffer.append(temp.stream().collect(Collectors.joining(" and ")));
         }
     }
 }

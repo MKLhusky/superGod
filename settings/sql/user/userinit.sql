@@ -19,6 +19,7 @@ create table super_user.user_base
     create_time       datetime collate utf8mb4_bin default current_timestamp                             null comment '创建时间',
     create_by         bigint collate utf8mb4_bin                                                         not null comment '创建人',
     update_time       datetime collate utf8mb4_bin default current_timestamp on update current_timestamp null comment '更新时间',
+    update_by         bigint collate utf8mb4_bin                                                         not null comment '更新人',
     version           bigint collate utf8mb4_bin   default 0                                             null comment '版本号'
 )
     comment '用户基本信息表';
@@ -35,6 +36,7 @@ create table super_user.user_contact
     create_time       datetime collate utf8mb4_bin default current_timestamp                             null comment '创建时间',
     create_by         bigint collate utf8mb4_bin                                                         not null comment '创建人',
     update_time       datetime collate utf8mb4_bin default current_timestamp on update current_timestamp null comment '更新时间',
+    update_by         bigint collate utf8mb4_bin                                                         not null comment '更新人',
     version           bigint collate utf8mb4_bin   default 0                                             null comment '版本号'
 )
     comment '用户联系方式';

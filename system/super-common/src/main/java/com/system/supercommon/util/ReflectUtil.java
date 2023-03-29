@@ -83,12 +83,22 @@ public class ReflectUtil {
      * @param fieldName
      **/
     public static Field getField(Object obj,String fieldName){
-        try {
-            return obj.getClass().getField(fieldName);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
+        Field field=null;
+
+        Class<?> tempClass = obj.getClass();
+        while (null!=tempClass&&!tempClass.equals(Object.class)){
+            try {
+                Field declaredField = tempClass.getDeclaredField(fieldName);
+                field=declaredField;
+                break;
+            }catch (NoSuchFieldException e){
+                tempClass=tempClass.getSuperclass();
+            }
         }
+        return field;
+
     }
+
 
     /**
      * @Author: Mr. Dai
@@ -119,12 +129,19 @@ public class ReflectUtil {
      * @param name
      **/
     public static Method getMethod(Object obj,String name,Class... param){
-        try {
-            Method declaredMethod = obj.getClass().getDeclaredMethod(name, param);
-            return declaredMethod;
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
+        Method method=null;
+
+        Class<?> aClass = obj.getClass();
+        while (null!=aClass&&!aClass.equals(Object.class)){
+            try {
+                Method declaredMethod = aClass.getDeclaredMethod(name, param);
+                method=declaredMethod;
+                break;
+            } catch (NoSuchMethodException e) {
+                aClass=aClass.getSuperclass();
+            }
         }
+        return method;
     }
 
 }

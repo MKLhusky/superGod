@@ -27,6 +27,8 @@
         <mysql.v>8.0.32</mysql.v>
         <mybatis.v>3.0.1</mybatis.v>
         <lombok.v>1.18.24</lombok.v>
+        <codec.v>1.15</codec.v>
+        <lang3.v>3.12.0</lang3.v>
     </properties>
 
 
@@ -52,6 +54,35 @@
     <!--全局依赖申明-->
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${lang3.v}</version>
+            </dependency>
+
+
+            <!--加密工具类-->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${codec.v}</version>
+            </dependency>
+
+
+            <!--用户对外统一门户api-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>user-api</artifactId>
+                <version>${project.v}</version>
+            </dependency>
+
+            <!--用户功能模块包-->
+            <dependency>
+                <groupId>org.fd</groupId>
+                <artifactId>user</artifactId>
+                <version>${project.v}</version>
+            </dependency>
 
             <!--系统公共基础包-->
             <dependency>

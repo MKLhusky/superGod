@@ -31,6 +31,18 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--加密工具类-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <!--lang包工具类-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${lang3.v}</version>
+        </dependency>
+
 
         <!-- lombok -->
         <dependency>

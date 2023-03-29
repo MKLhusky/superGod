@@ -10,6 +10,9 @@ public class QueryFieldSelect<T> extends HandlerField<T,Object> {
 
     public QueryFieldSelect(TypeFunction<T,Object>... typeFunctions){
         super(typeFunctions);
+        if(null==typeFunctions||typeFunctions.length<1){
+            throw new IllegalArgumentException("查询固定字段处理器,最少选择一个字段查询");
+        }
     }
     @Override
     protected HandlerField handler(T t) {

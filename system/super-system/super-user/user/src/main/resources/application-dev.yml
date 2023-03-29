@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/super_user?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+      username: root
+      password: daiqimeng
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 30
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter: #WebStatFilter用于采集web-jdbc关联监控的数据。
+        enabled: true
+      statViewServlet: #提供监控信息展示的html页面 与 提供监控信息的JSON API
+        enabled: true
+        # 设置白名单，不填则允许所有访问， 填入的值为IP地址
+        allow: #允许访问例子：128.242.127.1/24  24表示前面24位时子网掩码， 比对的时候比较前24位是否相同。但是目前不支持IPV6
+        deny: #不允许访问的地址，该配置优于allow，如果在该列表配置过，那么就算在allow配置也会不允许访问
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: junl
+        login-password: 123456
+      filter: #过滤配置
+        stat: #SQL监控配置
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true #多条相似sql合为一条
+        wall: #防火墙配置
+          config:
+            update-allow: true #允许更新操作
+            drop-table-allow: false #禁止删表操作
+            insert-allow: true #允许插入操作
+            delete-allow: true #删除数据操作
+            multi-statement-allow: true #是否允许一次执行多条sql
+            deleteWhereNoneCheck: true #检查delete是否无where条件

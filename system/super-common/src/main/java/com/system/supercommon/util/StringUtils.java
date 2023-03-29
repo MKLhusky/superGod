@@ -1,5 +1,6 @@
 package com.system.supercommon.util;
 
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,14 +10,20 @@ import java.util.regex.Pattern;
  * @author Mr. Dai
  * @date 2023/3/28 16:58
  */
-public class StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
+    private static final Integer RANDOM_START=33;
+    private static final Integer RANDOM_END=126;
+    private static final SecureRandom SECURERANDOM;
 
     private static Pattern SNAKE_PATTERN;
     private static Pattern HUMP_PATTERN;
 
+
     static {
         HUMP_PATTERN = Pattern.compile("[A-Z](?=[a-z])");
         SNAKE_PATTERN = Pattern.compile("_[a-z]");
+        SECURERANDOM=new SecureRandom();
     }
 
 
@@ -58,7 +65,7 @@ public class StringUtils {
      * @author Mr. Dai
      * @date 2023/3/28 17:07
      */
-    public static String isCutSuffix(String s,String suffix){
+    public static String cutSuffix(String s, String suffix){
         if(null!=suffix&&suffix.length()<s.length()){
             s=s.substring(0,s.length()-suffix.length());
         }
@@ -98,6 +105,23 @@ public class StringUtils {
             matcher.appendReplacement(buffer,matcher.group(0).toUpperCase().replace("_",""));
         }
         matcher.appendTail(buffer);
+        return buffer.toString();
+    }
+
+
+    /**
+     * @Description:  根据指定长度获取随机字符
+     *  采用ascii 码33-126的基本字符 抛弃无法识别的扩展字符
+     * @param size
+     * @return java.lang.String
+     * @author Mr. Dai
+     * @date 2023/3/29 10:55
+     */
+    public static String random(int size){
+        StringBuffer buffer=new StringBuffer();
+        for(int i=0;i<size;i++){
+            buffer.append((char)(SECURERANDOM.nextInt(RANDOM_END-RANDOM_START)+RANDOM_START));
+        }
         return buffer.toString();
     }
 

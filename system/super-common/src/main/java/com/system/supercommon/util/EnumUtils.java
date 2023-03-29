@@ -18,38 +18,39 @@ public class EnumUtils {
         Object[] enumConstants = t.getEnumConstants();
         T result = null;
 
+
+        //找到枚举属性是Integer类型的名称
+
+        String methodSecondName =null;
+
         for (Object enumConstant : enumConstants) {
             Class aClass = enumConstant.getClass();
-            //获取枚举所有属性
-            Field[] declaredFields = aClass.getDeclaredFields();
 
-            String codeName = null;
-            //找到枚举属性是Integer类型的名称
-            for (Field declaredField : declaredFields) {
-                if (declaredField.getType().equals(Integer.class)) {
-                    codeName = declaredField.getName();
+            if(StringUtils.isBlank(methodSecondName)){
+                String codeName = null;
+                for (Field declaredField : ReflectUtil.getFields(enumConstant)) {
+                    if (declaredField.getType().equals(Integer.class)) {
+                        codeName = declaredField.getName();
+                        break;
+                    }
                 }
+
+                if (null == codeName || codeName.trim().length() == 0) {
+                    throw new RuntimeException(String.format("获取不到属性的get方法: :%s", codeName));
+                }
+                methodSecondName=StringUtils.toFirstUpperCase(codeName);
             }
-
-            if (null == codeName || codeName.trim().length() == 0) {
-                throw new IllegalArgumentException("Error obtaining enumeration object: Field with attribute value type Integer was not found");
-            }
-
-
-            String methodSecondName = StringUtils.toFirstUpperCase(codeName);
 
             //反射获取get方法
             Method method = null;
             try {
-                method = aClass.getMethod(String.format("get%s", methodSecondName));
+                method = ReflectUtil.getMethod(enumConstant,String.format("get%s", methodSecondName));
                 Object invoke = method.invoke(enumConstant);
                 if (invoke.equals(code)) {
                     result = (T) enumConstant;
                     break;
                 }
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(String.format("获取不到属性的get方法: :%s", codeName));
-            } catch (Exception e) {
+            }  catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
             }
         }
