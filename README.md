@@ -5,7 +5,7 @@
 * 查询对象DTO (data transmission Object) 
 * 展示对象VO (view Object)  
 * 业务逻辑处理对象BO(原do 无法建包改为BO 取business Object)
-* 数据库状态统一使用枚举，枚举统一有code 和 label 2个字段
+* 数据库状态统一使用枚举，枚举统一有code (包括getCode 获取方法) 和 label(可选 建议) 2个字段
 * PO对象主键必须是id 或者xxxId格式
 
 ## 项目结构
