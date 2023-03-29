@@ -27,52 +27,52 @@ public class SqlUtils {
     }
 
     /**
-     * @Author: Mr. Dai
-     * @Description:  根据条件获取单个数据
-     * @Date: 21:07 2023/3/28
      * @param t
+     * @Author: Mr. Dai
+     * @Description: 根据条件获取单个数据
+     * @Date: 21:07 2023/3/28
      **/
-    public <T>T selectOne(T t){
-        return selectOne(t,null);
+    public <T> T selectOne(T t) {
+        return selectOne(t, null);
     }
 
 
     /**
+     * @param t
+     * @param handlerField
      * @Author: Mr. Dai
      * @Description: 根据条件和字段处理器 获取单挑数据
      * @Date: 21:07 2023/3/28
-     * @param t
-     * @param handlerField
      **/
-    public <T>T selectOne(T t,HandlerField handlerField){
+    public <T> T selectOne(T t, HandlerField handlerField) {
 
         //返回结果集
         List<T> tempList = selectList(t, handlerField);
-        if(tempList.size()>0){
-            throw new RuntimeException(String.format("查询一条数据,但是查询到了%s条",tempList.size()));
+        if (tempList.size() > 0) {
+            throw new RuntimeException(String.format("查询一条数据,但是查询到了%s条", tempList.size()));
         }
         return tempList.get(0);
     }
 
     /**
-     * @Author: Mr. Dai
-     * @Description:  根据条件查询集合
-     * @Date: 22:18 2023/3/28
      * @param t
+     * @Author: Mr. Dai
+     * @Description: 根据条件查询集合
+     * @Date: 22:18 2023/3/28
      **/
-    public <T> List<T> selectList(T t){
-        return selectList(t,null);
+    public <T> List<T> selectList(T t) {
+        return selectList(t, null);
     }
 
 
     /**
-     * @Author: Mr. Dai
-     * @Description:  根据条件和字段处理器查询集合
-     * @Date: 22:18 2023/3/28
      * @param t
      * @param handlerField
+     * @Author: Mr. Dai
+     * @Description: 根据条件和字段处理器查询集合
+     * @Date: 22:18 2023/3/28
      **/
-    public <T> List<T> selectList(T t,HandlerField handlerField){
+    public <T> List<T> selectList(T t, HandlerField handlerField) {
         //获取所有查询字段
         Set<String> fields = SqlBeanUtils.getFields(t, handlerField);
         String[] arrFields = fields.toArray(new String[0]);
@@ -80,7 +80,7 @@ public class SqlUtils {
         List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
 
         //拼装sql
-        String sql = SqlAssembly.assembly(SqlBeanUtils.getTable(t.getClass(), null), arrFields, SqlStatus.QUERY, condition.toArray(new SqlCondition[0]));
+        String sql = SqlAssembly.assembly(SqlBeanUtils.getTable(t.getClass()), arrFields, SqlStatus.QUERY, condition.toArray(new SqlCondition[0]));
 
         Connection connection = getConnection();
         try {
@@ -101,33 +101,33 @@ public class SqlUtils {
     }
 
     /**
-     * @Author: Mr. Dai
-     * @Description: 根据查询结果集赋值
-     * @Date: 21:42 2023/3/28
      * @param cls
      * @param field
      * @param set
+     * @Author: Mr. Dai
+     * @Description: 根据查询结果集赋值
+     * @Date: 21:42 2023/3/28
      **/
-    private <T> List<T> assignValue(Class<T> cls, String[] field,ResultSet set) throws SQLException {
+    private <T> List<T> assignValue(Class<T> cls, String[] field, ResultSet set) throws SQLException {
 
-        List<T> result=new ArrayList<>();
+        List<T> result = new ArrayList<>();
 
         //遍历获取结果集
-        while (set.next()){
-            T t=null;
+        while (set.next()) {
+            T t = null;
             try {
-                t= cls.getConstructor().newInstance();
-            }catch (Exception e){
+                t = cls.getConstructor().newInstance();
+            } catch (Exception e) {
                 throw new RuntimeException("获取无参构造失败,无法实例化对象");
             }
 
-            for(int i=0;i<field.length;i++){
+            for (int i = 0; i < field.length; i++) {
                 Field field1 = ReflectUtil.getField(t, field[i]);
                 if (field1.getClass().isEnum()) {
                     //处理枚举对象
-                    ReflectUtil.setValue(field1,t, EnumUtils.getEnum((Class<? extends Enum>) t.getClass(),set.getInt(i)));
-                }else{
-                    ReflectUtil.setValue(field[i],t,set.getObject(i));
+                    ReflectUtil.setValue(field1, t, EnumUtils.getEnum((Class<? extends Enum>) t.getClass(), set.getInt(i)));
+                } else {
+                    ReflectUtil.setValue(field[i], t, set.getObject(i));
                 }
             }
             result.add(t);
@@ -136,25 +136,24 @@ public class SqlUtils {
     }
 
 
-
     /**
-     * @Description:  根据数据源获取sqlUtils类
      * @param dataSource
      * @return org.daiqimeng.example.sqlutil.SqlUtils
+     * @Description: 根据数据源获取sqlUtils类
      * @author Mr. Dai
      * @date 2023/3/28 15:21
      */
-    public static SqlUtils getSqlUtils(DataSource dataSource){
+    public static SqlUtils getSqlUtils(DataSource dataSource) {
         return new SqlUtils(dataSource);
     }
 
 
     /**
      * @Author: Mr. Dai
-     * @Description:  获取数据库连接
+     * @Description: 获取数据库连接
      * @Date: 21:49 2023/3/28
      **/
-    private Connection getConnection(){
+    private Connection getConnection() {
         try {
             Connection connection = dataSource.getConnection();
             return connection;

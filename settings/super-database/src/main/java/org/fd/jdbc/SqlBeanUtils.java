@@ -18,10 +18,8 @@ import java.util.Set;
 public class SqlBeanUtils {
 
 
-    private static String SUFFIX="PO";
-
-    protected static Set<String> getFields(Object t, HandlerField handlerField){
-        if (null==handlerField) {
+    protected static Set<String> getFields(Object t, HandlerField handlerField) {
+        if (null == handlerField) {
             return new AllNotIgnore<>().execute(t).getResultFields();
         }
         return handlerField.execute(t).getResultFields();
@@ -29,17 +27,17 @@ public class SqlBeanUtils {
 
 
     /**
-     * @Description:  获取对象id
-     *  //TODO  有强烈约束 项目规范工具  id 字段为寻找到的第一个字段名称为id  或 Id后缀的
      * @param t
      * @return java.lang.String
+     * @Description: 获取对象id
+     * //TODO  有强烈约束 项目规范工具  id 字段为寻找到的第一个字段名称为id  或 Id后缀的
      * @author Mr. Dai
      * @date 2023/3/28 15:13
      */
-    protected static String getId(Object t){
+    protected static String getId(Object t) {
         for (Field declaredField : ReflectUtil.getFields(t)) {
             String name = declaredField.getName();
-            if (name.endsWith("id")||name.endsWith("Id")) {
+            if (name.endsWith("id") || name.endsWith("Id")) {
                 return name;
             }
         }
@@ -47,43 +45,38 @@ public class SqlBeanUtils {
     }
 
     /**
-     * @Description:   获取数据库名称
-     * @param cls 类型
-     * @param suffix 后缀 默认PO
+     * @param cls    类型
      * @return java.lang.String
+     * @Description: 获取数据库名称
      * @author Mr. Dai
      * @date 2023/3/28 17:21
      */
-    protected static String getTable(Class cls,String suffix){
+    protected static String getTable(Class cls) {
         String simpleName = cls.getSimpleName();
-        simpleName= StringUtils.isCutSuffix(simpleName,null!=suffix?suffix:SUFFIX);
         return StringUtils.toSnake(simpleName);
     }
 
     /**
-     * @Description:  获取对象有值的字段名称和值
      * @param t
      * @return java.util.List<org.daiqimeng.example.sqlutil.SelectCondition>
+     * @Description: 获取对象有值的字段名称和值
      * @author Mr. Dai
      * @date 2023/3/28 18:02
      */
-    protected static<T> List<SqlCondition> getCondition(T t){
+    protected static <T> List<SqlCondition> getCondition(T t) {
 
-        List<SqlCondition> conditions=new ArrayList<>();
+        List<SqlCondition> conditions = new ArrayList<>();
         for (Field declaredField : ReflectUtil.getFields(t)) {
-            Object o = ReflectUtil.getValue(declaredField,t);
-            if (null!=o) {
-                SqlCondition selectCondition=new SqlCondition();
+            Object fieldValue = ReflectUtil.getValue(declaredField, t);
+            if (null != fieldValue) {
+                SqlCondition selectCondition = new SqlCondition();
                 selectCondition.setName(declaredField.getName());
-                selectCondition.setValue(o);
+                selectCondition.setValue(fieldValue);
             }
 
         }
         return conditions;
     }
-
-
-
 
 
 }
