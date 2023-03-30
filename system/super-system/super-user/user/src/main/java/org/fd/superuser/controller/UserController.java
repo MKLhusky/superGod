@@ -4,6 +4,7 @@ import com.system.supercommon.result.R;
 import jakarta.annotation.Resource;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.superuser.service.UserService;
+import org.fd.superuser.serviceimpl.UserServiceImpl;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Resource
+    @Resource(type = UserServiceImpl.class)
     private UserService userService;
 
 
