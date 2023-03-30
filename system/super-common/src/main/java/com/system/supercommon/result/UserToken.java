@@ -2,6 +2,7 @@ package com.system.supercommon.result;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * Description: token加密对象  目前只需要一个id  有业务需要需要加字段
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class UserToken {
 
     private Long userId;

@@ -1,7 +1,7 @@
-package org.fd.pojo;
+package org.fd.userenum;
 
 /**
- * Description: 登录状态 (待扩展)
+ * Description: 登录状态 (待扩展) //todo
  *
  * @author Mr. Dai
  * @date 2023/3/29 17:31

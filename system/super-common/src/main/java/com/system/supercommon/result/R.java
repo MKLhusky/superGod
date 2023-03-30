@@ -8,7 +8,7 @@ public class R<T> implements Serializable {
 
     private static final String SUCCESS_MSG = "操作成功";
 
-    private static final String FAIL_MSG = "操作成功";
+    private static final String FAIL_MSG = "操作失败";
 
     private int code = 200;
 

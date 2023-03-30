@@ -1,6 +1,8 @@
 package org.fd.superuser.service;
 
-import org.fd.pojo.dto.UserLoginDto;
+import org.fd.pojo.dto.UserLoginDTO;
+import org.fd.pojo.vo.UserInfoVO;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Description: 用户内部服务接口
@@ -11,5 +13,7 @@ import org.fd.pojo.dto.UserLoginDto;
 public interface UserService {
 
 
-    String getUser(UserLoginDto userLoginDto);
+    String getUser(UserLoginDTO userLoginDto);
+
+    UserInfoVO selectUserInfo(Long userId);
 }

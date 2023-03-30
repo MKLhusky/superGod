@@ -1,5 +1,8 @@
 # superGod(超神之路)
 
+## 项目开发说明
+* 用户模块:  统一前缀url &emsp;&emsp; /super_user
+
 ## 项目规范
 * 数据库映射对象统一称为xxxPO (Persistent object) 必须跟数据库字段一一对应
 * 查询对象DTO (data transmission Object) 

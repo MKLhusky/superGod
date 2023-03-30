@@ -1,4 +1,4 @@
-package org.fd.superuser.userenum;
+package org.fd.userenum;
 
 import java.util.Arrays;
 import java.util.Optional;

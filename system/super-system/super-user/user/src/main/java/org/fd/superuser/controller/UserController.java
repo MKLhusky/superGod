@@ -2,8 +2,9 @@ package org.fd.superuser.controller;
 
 import com.system.supercommon.result.R;
 import jakarta.annotation.Resource;
-import org.fd.pojo.dto.UserLoginDto;
+import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.superuser.service.UserService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -28,8 +29,21 @@ public class UserController {
      * @author Mr. Dai
      * @date 2023/3/29 17:47
      */
-    @PostMapping("/login")
-    public R  getUser(@RequestBody UserLoginDto userLoginDto){
+    @PostMapping("/loginPassword")
+    public R  getUser(@RequestBody @Validated UserLoginDTO userLoginDto){
         return R.success(userService.getUser(userLoginDto));
+    }
+
+
+    /**
+     * @Description:   根据用户id 获取用户信息详情
+     * @param userId
+     * @return com.system.supercommon.result.R
+     * @author Mr. Dai
+     * @date 2023/3/30 15:10
+     */
+    @GetMapping("selectUserInfo/{userId}")
+    public R selectUserInfo(@PathVariable("userId")Long userId){
+        return R.success(userService.selectUserInfo(userId));
     }
 }
