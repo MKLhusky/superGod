@@ -26,5 +26,7 @@ public class ParentPO {
 
     private Long version;
 
+    private Integer delFlag;
+
     private String remark;
 }

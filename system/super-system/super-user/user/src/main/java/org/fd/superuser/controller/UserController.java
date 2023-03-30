@@ -1,6 +1,6 @@
 package org.fd.superuser.controller;
 
-import com.system.supercommon.result.R;
+import com.system.supercommon.funcbean.R;
 import jakarta.annotation.Resource;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.superuser.service.UserService;

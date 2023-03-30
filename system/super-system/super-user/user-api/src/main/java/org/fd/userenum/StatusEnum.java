@@ -13,10 +13,8 @@ import java.util.Optional;
 
 public enum StatusEnum {
 
-    EMPTY("",-1),
-    EXCEPTION("异常",3),
-    FREEZE("冻结",2),
-    DELETE("删除",1),
+    EXCEPTION("异常",2),
+    FREEZE("冻结",1),
     NORMAL("正常的",0);
 
     //显示值

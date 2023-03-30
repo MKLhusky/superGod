@@ -1,4 +1,4 @@
-package com.system.supercommon.result;
+package com.system.supercommon.funcbean;
 
 import lombok.Getter;
 import lombok.Setter;

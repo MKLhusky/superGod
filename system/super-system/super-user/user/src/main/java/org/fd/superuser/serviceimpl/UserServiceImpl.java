@@ -1,6 +1,7 @@
 package org.fd.superuser.serviceimpl;
 
-import com.system.supercommon.result.UserToken;
+import com.system.supercommon.comenum.StateEnum;
+import com.system.supercommon.funcbean.UserToken;
 import com.system.supercommon.util.TokenUtil;
 import jakarta.annotation.Resource;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,8 +37,9 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userLoginDto,userBasePO);
 
         //查询账号是否存在 顺带查询密码盐
-        UserBasePO passwordSalt = sqlUtils.selectOne(new UserBasePO()
-                        .setUserAccount(userBasePO.getUserAccount()),
+        UserBasePO passwordSalt = sqlUtils.selectOne((UserBasePO) new UserBasePO()
+                        .setUserAccount(userBasePO.getUserAccount())
+                        .setDelFlag(StateEnum.NORMAL.getCode()),
                 new QueryFieldSelect<>(UserBasePO::getPasswordSalt));
 
         if (ObjectUtils.isEmpty(passwordSalt)) {
@@ -45,19 +47,23 @@ public class UserServiceImpl implements UserService {
         }
 
         //根据密码盐加密
-        String password = DigestUtils.md5Hex(String.format("%s%s", userBasePO.getPassword(), passwordSalt.getPasswordSalt()));
+        String password = DigestUtils.md5Hex(String.format("%s%s",
+                userBasePO.getPassword(), passwordSalt.getPasswordSalt()));
 
         //根据账号和密码查询用户  [排除账户密码和盐]
-        UserBasePO result = sqlUtils.selectOne(new UserBasePO()
+        UserBasePO result = sqlUtils.selectOne((UserBasePO) new UserBasePO()
                 .setUserAccount(userBasePO.getUserAccount())
-                .setPassword(password), new QueryFiledExclude<>(UserBasePO::getPassword, UserBasePO::getPasswordSalt));
+                .setPassword(password)
+                .setDelFlag(StateEnum.NORMAL.getCode()),
+                new QueryFiledExclude<>(UserBasePO::getPassword, UserBasePO::getPasswordSalt));
 
         if(ObjectUtils.isEmpty(result)){
             throw new RuntimeException("密码错误");
         }
 
         //根据用户信息创建token  [过期时间2小时]
-        String token = TokenUtil.createToken(new UserToken().setUserId(result.getUserId()),2, TimeUnit.HOURS);
+        String token = TokenUtil.createToken(new UserToken()
+                .setUserId(result.getUserId()),2, TimeUnit.HOURS);
 
         return token;
     }

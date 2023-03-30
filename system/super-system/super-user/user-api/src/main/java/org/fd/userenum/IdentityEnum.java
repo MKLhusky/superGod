@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public enum IdentityEnum {
 
-    EMPTY("空",-1),
     STAFF("普通用户",2),
     MANAGER("管理员",1),
     ADMIN("超级管理员",0);

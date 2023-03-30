@@ -14,8 +14,7 @@ public enum SexEnum {
 
     WOMAN("女",0),
     MAN("男",1),
-    UNKNOWN("未知",2),
-    EMPTY("",-1);
+    UNKNOWN("未知",2);
 
     //显示值
     private String label;

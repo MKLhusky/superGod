@@ -1,7 +1,7 @@
 package org.fd.dailyattendance.controller;
 
 
-import com.system.supercommon.result.R;
+import com.system.supercommon.funcbean.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
