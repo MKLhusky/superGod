@@ -50,8 +50,8 @@ public class HttpRequest {
 
 
     public R connection() {
-        InputStream responseInput;
-        BufferedReader bufferedReader;
+        InputStream responseInput = null;
+        BufferedReader bufferedReader = null;
         try {
             urlConnection.connect();
             int responseCode = urlConnection.getResponseCode();
@@ -79,9 +79,13 @@ public class HttpRequest {
                 if (paramsOutputStream != null) {
                     paramsOutputStream.close();
                 }
+                if (responseInput != null){
+                    responseInput.close();
+                }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
+            urlConnection.disconnect();
         }
 
         return R.fail();
