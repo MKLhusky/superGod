@@ -14,6 +14,9 @@
     <name>user-api</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.fd</groupId>
+            <artifactId>super-common</artifactId>
+        </dependency>
     </dependencies>
 </project>
