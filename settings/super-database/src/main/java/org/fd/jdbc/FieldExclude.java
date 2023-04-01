@@ -1,11 +1,6 @@
 package org.fd.jdbc;
 
-import com.system.supercommon.bean.ParentPO;
-import com.system.supercommon.util.ReflectUtil;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Description: 字段忽略 查询使用
@@ -13,9 +8,9 @@ import java.lang.reflect.InvocationTargetException;
  * @author Mr. Dai
  * @date 2023/3/28 14:37
  */
-public class QueryFiledExclude<T> extends HandlerField<T,Object> {
+public class FieldExclude<T> extends HandlerField<T,Object> {
 
-    public QueryFiledExclude(TypeFunction<T,Object>... typeFunctions){
+    public FieldExclude(TypeFunction<T,Object>... typeFunctions){
         super(typeFunctions);
     }
     @Override

@@ -65,6 +65,13 @@ public class ReflectUtil {
         }
     }
 
+
+    public static Object getValue(String filedName,Object o){
+        Field field = getField(o, filedName);
+        return getValue(field,o);
+    }
+
+
     /**
      * @Author: Mr. Dai
      * @Description:  获取所有field
