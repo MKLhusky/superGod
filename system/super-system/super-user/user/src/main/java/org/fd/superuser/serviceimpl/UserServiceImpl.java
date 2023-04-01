@@ -6,8 +6,8 @@ import com.system.supercommon.util.TokenUtil;
 import jakarta.annotation.Resource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.fd.jdbc.QueryFieldSelect;
-import org.fd.jdbc.QueryFiledExclude;
+import org.fd.jdbc.FieldSelect;
+import org.fd.jdbc.FieldExclude;
 import org.fd.jdbc.SqlUtils;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.pojo.vo.UserInfoVO;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         UserBasePO passwordSalt = sqlUtils.selectOne((UserBasePO) new UserBasePO()
                         .setUserAccount(userBasePO.getUserAccount())
                         .setDelFlag(StateEnum.NORMAL.getCode()),
-                new QueryFieldSelect<>(UserBasePO::getPasswordSalt));
+                new FieldSelect<>(UserBasePO::getPasswordSalt));
 
         if (ObjectUtils.isEmpty(passwordSalt)) {
             throw new RuntimeException("账号不存在");
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 .setUserAccount(userBasePO.getUserAccount())
                 .setPassword(password)
                 .setDelFlag(StateEnum.NORMAL.getCode()),
-                new QueryFiledExclude<>(UserBasePO::getPassword, UserBasePO::getPasswordSalt));
+                new FieldExclude<>(UserBasePO::getPassword, UserBasePO::getPasswordSalt));
 
         if(ObjectUtils.isEmpty(result)){
             throw new RuntimeException("密码错误");

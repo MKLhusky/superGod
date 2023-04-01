@@ -47,7 +47,7 @@ public class SqlAssembly {
             temp.add(String.format("%s = ?",StringUtils.toSnake(s)));
         }
         buffer.append(temp.stream().collect(Collectors.joining(",")));
-        assemblyCondition(buffer,true,sqlCondition);
+        assemblyCondition(buffer,sqlCondition);
         return buffer.toString();
     }
 
@@ -96,7 +96,7 @@ public class SqlAssembly {
         buffer.append(" from ");
         buffer.append(tableName);
         buffer.append(" ");
-        assemblyCondition(buffer,false,conditions);
+        assemblyCondition(buffer,conditions);
 
         return buffer.toString();
     }
@@ -111,7 +111,7 @@ public class SqlAssembly {
     private static String deleteSql(String tableName, SqlCondition... conditions){
         StringBuffer buffer=new StringBuffer("delete from ");
         buffer.append(tableName);
-        assemblyCondition(buffer,false,conditions);
+        assemblyCondition(buffer,conditions);
         return buffer.toString();
     }
 
@@ -120,15 +120,14 @@ public class SqlAssembly {
      * @Description: 组装条件
      * @Date: 20:35 2023/3/28
      * @param buffer
-     * @param flag 是否开启预编译 true 开启 false 不开启
      * @param conditions
      **/
-    protected static void assemblyCondition(StringBuffer buffer,boolean flag,SqlCondition... conditions){
+    protected static void assemblyCondition(StringBuffer buffer,SqlCondition... conditions){
         if(null!=conditions&&conditions.length>0){
             buffer.append(" where ");
             List<String> temp=new ArrayList<>();
             for (SqlCondition condition : conditions) {
-                temp.add(String.format("%s = %s",StringUtils.toSnake(condition.getName()),flag?"?":condition.getValue()));
+                temp.add(String.format("%s = %s",StringUtils.toSnake(condition.getName()),"?"));
             }
             buffer.append(temp.stream().collect(Collectors.joining(" and ")));
         }
