@@ -42,13 +42,6 @@ public class HttpRequest {
         return httpPostRequest;
     }
 
-
-    public HttpRequest setHeader(Map<String, String> map) {
-        map.forEach((k,v) -> {urlConnection.setRequestProperty(k,v);});
-        return httpPostRequest;
-    }
-
-
     public R connection() {
         InputStream responseInput = null;
         BufferedReader bufferedReader = null;
