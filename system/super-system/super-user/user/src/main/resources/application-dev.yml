@@ -5,7 +5,7 @@ spring:
     druid:
       url: jdbc:mysql://127.0.0.1:3306/super_user?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
       username: root
-      password: daiqimeng
+      password: root
       # 初始连接数
       initialSize: 5
       # 最小连接池数量

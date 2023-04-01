@@ -8,6 +8,13 @@ class DailyAttendanceApplicationTests {
 
     @Test
     void contextLoads() {
+        try{
+
+        }catch (Exception e){
+
+        }
+
+
     }
 
 }

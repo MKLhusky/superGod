@@ -23,6 +23,7 @@ public class LoginController {
     public R login(@RequestBody UserLoginDTO user){
 
         R response = HttpRequest.post("http://localhost:9000/super_user/user/loginPassword").setParams(user).connection();
+
         System.out.println(response);
         return R.success();
     }
