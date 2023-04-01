@@ -14,7 +14,7 @@
 
 
     <name>super-system</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <description>系统核心模块</description>
 
 
@@ -23,11 +23,13 @@
         <dependency>
             <groupId>org.fd</groupId>
             <artifactId>super-common</artifactId>
+            <version>${project.v}</version>
         </dependency>
 
         <dependency>
             <groupId>org.fd</groupId>
             <artifactId>super-database</artifactId>
+            <version>${project.v}</version>
         </dependency>
 
         <dependency>
@@ -41,6 +43,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.fd</groupId>
+            <artifactId>user-api</artifactId>
+            <version>${project.v}</version>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -54,6 +64,14 @@
         </plugins>
 
         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
             <!--<resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>

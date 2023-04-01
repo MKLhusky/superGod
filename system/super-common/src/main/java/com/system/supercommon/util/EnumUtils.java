@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
  */
 public class EnumUtils {
 
-    public static <T extends Enum<T>> T getEnum(Class<T> t, Integer code) {
+    public static <T extends Enum<T>> T getEnum(Class<T> t, int code) {
 
         //获取所有枚举对象
         Object[] enumConstants = t.getEnumConstants();

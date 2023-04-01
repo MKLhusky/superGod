@@ -40,6 +40,11 @@
             <groupId>org.fd</groupId>
             <artifactId>interface-api</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.fd</groupId>
+            <artifactId>super-database</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -67,7 +67,6 @@
             <version>${lang3.v}</version>
         </dependency>
 
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -75,6 +74,11 @@
             <version>${lombok.v}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.v}</version>
+        </dependency>
     </dependencies>
 
 </project>

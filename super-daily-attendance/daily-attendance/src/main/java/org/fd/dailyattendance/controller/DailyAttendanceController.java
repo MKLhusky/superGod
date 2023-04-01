@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DailyAttendanceController {
 
 
+
+
     @RequestMapping("/attendance")
     public R attendance(){
-
         return R.success();
     }
 
