@@ -47,9 +47,9 @@
         <module>settings/super-database</module>
 
         <!--系统用户模块-->
-        <module>system/super-system/super-user</module>
-        <module>system/super-system/super-user/user</module>
-        <module>system/super-system/super-user/user-api</module>
+        <module>system/super-user</module>
+        <module>system/super-user/user</module>
+        <module>system/super-user/user-api</module>
     </modules>
 
     <!--全局依赖申明-->

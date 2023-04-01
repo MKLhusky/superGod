@@ -13,7 +13,8 @@
     <groupId>org.fd</groupId>
     <artifactId>user</artifactId>
     <version>${project.v}</version>
-    <name>super-user</name>
+    <name>user</name>
+    <packaging>jar</packaging>
     <description>系统用户核心模块</description>
 
 

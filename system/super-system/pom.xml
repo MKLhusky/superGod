@@ -49,8 +49,6 @@
             <artifactId>user-api</artifactId>
             <version>${project.v}</version>
         </dependency>
-
-
     </dependencies>
 
 
