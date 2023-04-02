@@ -48,17 +48,10 @@ public class TokenUtil {
         if(time<0 || null==unit){
             return builder.sign(ALGORITHM);
         }
+        long expiresAt = TimeUtil.parsTimeToMillisecond(time, unit);
 
-        //判断过去时间  秒以下的不处理
-        long expiresAt= switch (unit){
-            case DAYS -> unit.toDays(time);
-            case HOURS -> unit.toHours(time);
-            case MINUTES -> unit.toHours(time);
-            case SECONDS -> unit.toSeconds(time);
-            default -> 0;
-        };
-
-        return builder.withExpiresAt(new Date(new Date().getTime()+expiresAt)).sign(ALGORITHM);
+        Date date = new Date(new Date().getTime() + expiresAt);
+        return builder.withExpiresAt(date).sign(ALGORITHM);
     }
 
 
@@ -87,6 +80,12 @@ public class TokenUtil {
      * @date 2023/3/29 18:11
      */
     public static UserToken getUserToken(String token){
+        if (StringUtils.isEmpty(token)){
+            throw new RuntimeException("token为空");
+        }
+        if (token.contains("Bearer ")){
+            token = token.replace("Bearer ", "");
+        }
         UserToken userToken = new UserToken();
         DecodedJWT verify;
         try {

@@ -2,6 +2,8 @@ package com.system.supersystem.controller;
 
 
 import com.system.supercommon.funcbean.R;
+import com.system.supercommon.funcbean.UserToken;
+import com.system.supercommon.util.TokenUtil;
 import com.system.supercommon.util.http.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.fd.pojo.dto.UserLoginDTO;
@@ -25,7 +27,7 @@ public class LoginController {
         R response = HttpRequest.post("http://localhost:9000/super_user/user/loginPassword").setParams(user).connection();
 
         System.out.println(response);
-        return R.success();
+        return response;
     }
 
 

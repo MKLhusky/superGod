@@ -1,6 +1,6 @@
 package org.fd.superuser.po;
 
-import com.system.supercommon.bean.ParentPO;
+import com.system.supercommon.bean.BaseEntityPO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,7 +18,7 @@ import org.fd.userenum.StatusEnum;
 @Accessors(chain = true)
 @Getter
 @Setter
-public class UserBasePO extends ParentPO {
+public class UserBasePO extends BaseEntityPO {
 
     private Long userId;
 

@@ -4,3 +4,11 @@ server:
 spring:
   profiles:
     active: dev
+
+mybatis:
+  #  mapper 文件扫描配置
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  # mybatis 配置
+  configuration:
+    #   驼峰自动映射
+    map-underscore-to-camel-case: true

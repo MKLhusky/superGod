@@ -1,11 +1,8 @@
 package org.fd.jdbc;
 
-import com.system.supercommon.bean.ParentPO;
 import com.system.supercommon.util.ReflectUtil;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Description: 全部字段 不忽略
