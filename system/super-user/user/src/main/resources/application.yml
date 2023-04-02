@@ -15,3 +15,12 @@ mybatis:
   configuration:
     #   驼峰自动映射
     map-underscore-to-camel-case: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  packages-to-scan: org.fd

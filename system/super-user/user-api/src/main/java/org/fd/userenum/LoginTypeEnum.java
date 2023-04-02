@@ -6,12 +6,12 @@ package org.fd.userenum;
  * @author Mr. Dai
  * @date 2023/3/29 17:31
  */
-public enum LoginStatusEnum {
+public enum LoginTypeEnum {
 
     APP_PASSWORD("app密码登录",1),
     PC_PASSWORD("pc密码登录",0);
 
-    LoginStatusEnum(String label,Integer code){
+    LoginTypeEnum(String label, Integer code){
         this.label=label;
         this.code=code;
     }

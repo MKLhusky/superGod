@@ -2,18 +2,23 @@ package com.system.supercommon.funcbean;
 
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
+@Schema(name = "全局返回对象")
 public class R<T> implements Serializable {
 
     private static final String SUCCESS_MSG = "操作成功";
 
     private static final String FAIL_MSG = "操作失败";
 
+    @Schema(name = "状态码")
     private int code = 200;
 
+    @Schema(name = "信息描述")
     private String msg = SUCCESS_MSG;
-
+    @Schema(name = "返回数据")
     private T data;
 
 

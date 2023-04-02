@@ -2,16 +2,13 @@ package org.fd.superuser.controller;
 
 import com.system.supercommon.funcbean.R;
 import com.system.supercommon.util.SnowFlake;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.annotation.Resource;
 import org.fd.jdbc.FieldSelect;
 import org.fd.jdbc.SqlUtils;
 import org.fd.superuser.po.UserBasePO;
-import org.fd.userenum.IdentityEnum;
-import org.fd.userenum.SexEnum;
-import org.fd.userenum.StatusEnum;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * Description: aaa
@@ -21,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/test")
+@Hidden
 public class TestController {
 
     @Resource

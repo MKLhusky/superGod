@@ -22,6 +22,18 @@
 
     <dependencies>
 
+        <!--swagger3 ui 支持-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!--swagger3 api支持-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+        </dependency>
+
+
         <!--token生成工具-->
         <dependency>
             <groupId>com.auth0</groupId>
