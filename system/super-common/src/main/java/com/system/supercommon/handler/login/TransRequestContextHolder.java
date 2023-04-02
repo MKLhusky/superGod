@@ -2,7 +2,7 @@ package com.system.supercommon.handler.login;
 
 public class TransRequestContextHolder {
 
-    private static ThreadLocal<UserInfo> THREAD_USER_INFO = new ThreadLocal<UserInfo>();
+    private static final ThreadLocal<UserInfo> THREAD_USER_INFO = new ThreadLocal<UserInfo>();
 
 
     public static void setUserInfo(UserInfo userInfo){
@@ -24,7 +24,7 @@ public class TransRequestContextHolder {
         THREAD_USER_INFO.remove();
     }
 
-    public static class UserInfo{
+    public static final class UserInfo{
         private Long userId;
 
         public void setUserId(Long userId){
