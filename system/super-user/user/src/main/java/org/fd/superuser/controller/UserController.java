@@ -3,11 +3,14 @@ package org.fd.superuser.controller;
 import com.system.supercommon.funcbean.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.fd.pojo.dto.UserLoginDTO;
+import org.fd.pojo.vo.UserInfoVO;
 import org.fd.superuser.service.UserService;
 import org.fd.superuser.serviceimpl.UserServiceImpl;
 import org.springframework.validation.annotation.Validated;
@@ -37,8 +40,9 @@ public class UserController {
      * @date 2023/3/29 17:47
      */
     @Operation(summary = "用户根据账号密码登陆",responses = {
-            @ApiResponse(description = "成功",responseCode = "200",ref = "java.lang.String"),
-            @ApiResponse(description = "失败",responseCode = "500")
+            @ApiResponse(description = "成功",responseCode = "200",
+                    content = {@Content(schema = @Schema(implementation = String.class))}
+            )
     })
     @PostMapping("/loginPassword")
     public R  getUser(@RequestBody @Validated UserLoginDTO userLoginDto){
@@ -53,9 +57,16 @@ public class UserController {
      * @author Mr. Dai
      * @date 2023/3/30 15:10
      */
+            /*方法描述*/
     @Operation(summary = "根据用户id查询用户信息",responses = {
-            @ApiResponse(description = "成功",responseCode = "200"),
-            @ApiResponse(description = "失败",responseCode = "500")
+            /*成功描述*/
+            @ApiResponse(description = "成功",responseCode = "200",
+                    /*返回对象*/
+                    content = {@Content(schema = @Schema(implementation = UserInfoVO.class))}),
+
+     /*参数描述*/
+    },parameters = {
+            @Parameter(name = "userId",description = "用户主键id")
     })
     @GetMapping("selectUserInfo/{userId}")
     public R selectUserInfo(@PathVariable("userId")Long userId){
