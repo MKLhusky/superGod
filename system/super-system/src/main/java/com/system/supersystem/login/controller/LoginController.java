@@ -1,9 +1,8 @@
-package com.system.supersystem.controller;
+package com.system.supersystem.login.controller;
 
 
+import com.system.supercommon.exception.base.SuperBaseException;
 import com.system.supercommon.funcbean.R;
-import com.system.supercommon.funcbean.UserToken;
-import com.system.supercommon.util.TokenUtil;
 import com.system.supercommon.util.http.HttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.fd.pojo.dto.UserLoginDTO;
@@ -30,5 +29,12 @@ public class LoginController {
         return response;
     }
 
+    @RequestMapping("/test")
+    public R test(){
+        if (1 == 1) {
+            throw new SuperBaseException("报错了");
+        }
+        return R.success();
+    }
 
 }

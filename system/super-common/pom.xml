@@ -108,6 +108,12 @@
             <artifactId>fastjson2</artifactId>
             <version>${fastjson2.v}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>${webflux.v}</version>
+        </dependency>
     </dependencies>
 
 </project>

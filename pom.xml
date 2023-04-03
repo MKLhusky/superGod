@@ -32,6 +32,7 @@
         <fastjson2.v>2.0.23</fastjson2.v>
         <swagger.v>2.1.0</swagger.v>
         <log4j2.v>3.0.5</log4j2.v>
+        <webflux.v>3.0.4</webflux.v>
     </properties>
 
 
@@ -78,10 +79,6 @@
                 <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
                 <version>${swagger.v}</version>
             </dependency>
-
-
-
-
 
 
             <!--java 基本类型第三方工具类-->
@@ -184,6 +181,12 @@
                 <version>${fastjson2.v}</version>
             </dependency>
 
+            <!-- 响应式框架 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webflux</artifactId>
+                <version>${webflux.v}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
