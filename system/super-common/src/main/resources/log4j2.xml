@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN"   monitorInterval="30">
+
+
+    <!--    <Properties>-->  <!--属性常量定义-->
+    <!--    </Properties>-->
+
+    <Appenders>
+
+        <Console name="console">
+            <PatternLayout>
+                <pattern>%d{HH:mm:ss} %highlight{%p} %highlight{%msg}%n</pattern>
+            </PatternLayout>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <!--        <AsyncLogger name="org.daiqimeng" level="info" includeLocation="true" additivity="false">-->
+        <!--            <AppenderRef ref="console"/>-->
+        <!--        </AsyncLogger>-->
+
+
+        <Root level="info">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
