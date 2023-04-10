@@ -2,10 +2,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/super-daily-attendance?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/super-daily-attendance?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-      username: root
-      password: root
       max-active: 8 #最大连接池数量
       minIdle: 1 #最小连接池数量
       initial-size: 5
@@ -39,6 +39,18 @@ spring:
         # 控制台管理用户名和密码
         login-username: druid
         login-password: 123456
+  data:
+    redis:
+      host: 192.168.157.137
+      port: 6379
+      password:
+      database: 0
+      lettuce:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
+
 
 
 

@@ -33,6 +33,8 @@
         <swagger.v>2.1.0</swagger.v>
         <log4j2.v>3.0.5</log4j2.v>
         <webflux.v>3.0.4</webflux.v>
+        <jedis.v>4.3.1</jedis.v>
+        <lettuce.v>6.2.3.RELEASE</lettuce.v>
     </properties>
 
 
@@ -186,6 +188,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-webflux</artifactId>
                 <version>${webflux.v}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.v}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,4 +1,4 @@
-package org.fd.dailyattendance.po;
+package org.fd.dailyattendance.dailyAttendance.po;
 
 
 import com.system.supercommon.bean.BaseEntityPO;
@@ -6,7 +6,7 @@ import com.system.supercommon.comenum.WhetherEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.fd.dailyattendance.enums.AttendanceTypeEnum;
+import org.fd.dailyattendance.dailyAttendance.enums.AttendanceTypeEnum;
 
 import java.time.LocalDateTime;
 

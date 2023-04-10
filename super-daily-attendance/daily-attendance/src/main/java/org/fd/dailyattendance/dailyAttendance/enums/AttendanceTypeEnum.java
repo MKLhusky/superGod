@@ -1,4 +1,4 @@
-package org.fd.dailyattendance.enums;
+package org.fd.dailyattendance.dailyAttendance.enums;
 
 public enum AttendanceTypeEnum {
 
