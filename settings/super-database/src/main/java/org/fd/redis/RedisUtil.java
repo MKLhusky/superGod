@@ -16,6 +16,23 @@ public class RedisUtil {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    //========================事务========================
+
+    /**
+     * 开启事务
+     */
+    public void tranStart(){
+        redisTemplate.multi();
+    }
+
+    /**
+     * 放弃事务
+     */
+    public void tranDiscard(){
+        redisTemplate.discard();
+    }
+
+
     //========================String=============================
 
     public void setValue(String key, String value) {
