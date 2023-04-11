@@ -22,12 +22,12 @@ public class RedisUtil {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public void setValueNx(String key, String value) {
-        redisTemplate.opsForValue().setIfAbsent(key, value);
+    public Boolean setValueNx(String key, String value) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value);
     }
 
-    public void setValueXx(String key, String value) {
-        redisTemplate.opsForValue().setIfPresent(key, value);
+    public Boolean setValueXx(String key, String value) {
+        return redisTemplate.opsForValue().setIfPresent(key, value);
     }
 
     public String getValue(String key) {
@@ -125,11 +125,12 @@ public class RedisUtil {
 
     /**
      * 等待并且从左边弹出一个元素，如果time时间内都没有值，那么返回null
+     *
      * @param key
      * @param time
      * @return
      */
-    public String leftPopByTimeout(String key, Duration time){
+    public String leftPopByTimeout(String key, Duration time) {
         return redisTemplate.opsForList().leftPop(key, time);
     }
 
@@ -146,20 +147,22 @@ public class RedisUtil {
 
     /**
      * 从右边弹出一个值
+     *
      * @param key
      * @return
      */
-    public String rightPop(String key){
+    public String rightPop(String key) {
         return redisTemplate.opsForList().rightPop(key);
     }
 
     /**
      * 等待并且从右边弹出一个元素，如果time时间内都没有值，那么返回null
+     *
      * @param key
      * @param time
      * @return
      */
-    public String rightPopTimeout(String key, Duration time){
+    public String rightPopTimeout(String key, Duration time) {
         return redisTemplate.opsForList().rightPop(key, time);
     }
 
@@ -187,12 +190,13 @@ public class RedisUtil {
 
     /**
      * 移除集合里面count个指定值
+     *
      * @param key
-     * @param count  > 0 从头开始的count个元素， < 0 从尾部开始的count个值  = 0 移除所有
+     * @param count > 0 从头开始的count个元素， < 0 从尾部开始的count个值  = 0 移除所有
      * @param value
      * @return
      */
-    public Long remove(String key, long count, Object value){
+    public Long remove(String key, long count, Object value) {
         return redisTemplate.opsForList().remove(key, count, value);
     }
 
@@ -201,28 +205,31 @@ public class RedisUtil {
 
     /**
      * 存入一个对象
+     *
      * @param key
-     * @param objectName 对象名
+     * @param objectName  对象名
      * @param objectValue 对象值
      */
-    public void put(String key, Object objectName, Object objectValue){
+    public void put(String key, Object objectName, Object objectValue) {
         redisTemplate.opsForHash().put(key, objectName, objectValue);
     }
 
     /**
      * 存入多个对象
+     *
      * @param key
      * @param value
      */
-    public void putAll(String key, Map value){
+    public void putAll(String key, Map value) {
         redisTemplate.opsForHash().putAll(key, value);
     }
 
     /**
      * 删除一个字典对象
+     *
      * @param key
      */
-    public Long deleteObj(String key){
+    public Long deleteObj(String key) {
         return redisTemplate.opsForHash().delete(key);
     }
 
@@ -231,41 +238,45 @@ public class RedisUtil {
 
     /**
      * 排序集合添加元素
+     *
      * @param key
      * @param value
      * @param score 分数
      */
-    public Boolean zAdd(String key, String value, double score){
+    public Boolean zAdd(String key, String value, double score) {
         return redisTemplate.opsForZSet().add(key, value, score);
     }
 
     /**
      * 排序集合删除key中的一些值
+     *
      * @param key
      * @param values
      */
-    public Long zRemove(String key, Object... values){
+    public Long zRemove(String key, Object... values) {
         return redisTemplate.opsForZSet().remove(key, values);
     }
 
     /**
      * 查询出一个范围内的元素
+     *
      * @param key
      * @param start
      * @param end
      * @return
      */
-    public Set<String> zRange(String key, int start, int end){
+    public Set<String> zRange(String key, int start, int end) {
         return redisTemplate.opsForZSet().range(key, start, end);
     }
 
     /**
      * 查询出一个key对应的value的分数
+     *
      * @param key
      * @param value
      * @return
      */
-    public Double zScore(String key, Object value){
+    public Double zScore(String key, Object value) {
         return redisTemplate.opsForZSet().score(key, value);
     }
 }
