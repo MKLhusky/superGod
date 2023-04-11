@@ -32,6 +32,13 @@ public class RedisUtil {
         redisTemplate.discard();
     }
 
+    /**
+     * 对一个key开启监控，如果在开启监控的时间内该key的值发生变化了，那么就取消整个事务
+     */
+    public void watch(String key){
+        redisTemplate.watch(key);
+    }
+
 
     //========================String=============================
 
