@@ -1,4 +1,4 @@
-package org.fd.superuser.dao;
+package org.fd.superuser.user;
 
 
 /**

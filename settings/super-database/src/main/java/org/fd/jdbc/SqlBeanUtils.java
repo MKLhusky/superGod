@@ -3,7 +3,10 @@ package org.fd.jdbc;
 
 import com.system.supercommon.util.ReflectUtil;
 import com.system.supercommon.util.StringUtils;
+import org.fd.annotation.TableName;
+import org.springframework.util.ObjectUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -61,6 +64,10 @@ public class SqlBeanUtils {
      * @date 2023/3/28 17:21
      */
     protected static String getTable(Class cls,String suffix){
+        TableName tableName = (TableName) cls.getDeclaredAnnotation(TableName.class);
+        if (!ObjectUtils.isEmpty(tableName)){
+            return tableName.value();
+        }
         String simpleName = cls.getSimpleName();
         simpleName= StringUtils.cutSuffix(simpleName,(null!=suffix&&suffix.trim().length()>0)?suffix:SUFFIX);
         return StringUtils.toSnake(simpleName);

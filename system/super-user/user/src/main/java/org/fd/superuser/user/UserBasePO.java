@@ -1,9 +1,10 @@
-package org.fd.superuser.po;
+package org.fd.superuser.user;
 
 import com.system.supercommon.bean.BaseEntityPO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.fd.annotation.TableName;
 import org.fd.userenum.IdentityEnum;
 import org.fd.userenum.SexEnum;
 import org.fd.userenum.StatusEnum;
@@ -18,6 +19,7 @@ import org.fd.userenum.StatusEnum;
 @Accessors(chain = true)
 @Getter
 @Setter
+@TableName("user_base")
 public class UserBasePO extends BaseEntityPO {
 
     private Long userId;

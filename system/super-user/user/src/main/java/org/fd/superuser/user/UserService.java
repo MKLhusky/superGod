@@ -1,4 +1,4 @@
-package org.fd.superuser.service;
+package org.fd.superuser.user;
 
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.pojo.vo.UserInfoVO;

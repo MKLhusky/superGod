@@ -1,9 +1,10 @@
-package org.fd.superuser.serviceimpl;
+package org.fd.superuser.user;
 
 import com.system.supercommon.comenum.StateEnum;
 import com.system.supercommon.funcbean.UserToken;
 import com.system.supercommon.util.TokenUtil;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.fd.jdbc.FieldSelect;
@@ -11,8 +12,6 @@ import org.fd.jdbc.FieldExclude;
 import org.fd.jdbc.SqlUtils;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.pojo.vo.UserInfoVO;
-import org.fd.superuser.po.UserBasePO;
-import org.fd.superuser.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +24,10 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/3/29 17:12
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private SqlUtils sqlUtils;
+    private final SqlUtils sqlUtils;
 
     @Override
     public String getUser(UserLoginDTO userLoginDto) {

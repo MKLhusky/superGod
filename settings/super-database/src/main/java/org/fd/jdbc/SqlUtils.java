@@ -4,6 +4,9 @@ import com.system.supercommon.util.EnumUtils;
 import com.system.supercommon.util.ReflectUtil;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.ConnectionHolder;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
@@ -23,6 +26,9 @@ public class SqlUtils {
 
     private DataSource dataSource;
 
+    private static int BATCH_SIZE=1000;
+
+
     public SqlUtils(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -36,6 +42,17 @@ public class SqlUtils {
      **/
     public <T> int update(@NotNull T t,FieldSelect<T> fieldSelect){
         return update(t,null,fieldSelect);
+    }
+
+
+    private void close(Connection connection){
+        if (!TransactionSynchronizationManager.isSynchronizationActive()) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
@@ -87,7 +104,8 @@ public class SqlUtils {
         if (log.isInfoEnabled()) {
             log.info(sql);
         }
-        try (Connection connection = getConnection()){
+        Connection connection = getConnection();
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             //更新的值 和条件值都需要在预编译中填充,所以2个按顺序合并
             String[] fieldsValue=new String[fieldArr.length+conditionField.length];
@@ -98,6 +116,7 @@ public class SqlUtils {
             for(int i=0;i<fieldsValue.length;i++){
                 preparedStatement.setObject(i+1,map.get(fieldsValue[i]));
             }
+            close(connection);
             return preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -114,14 +133,12 @@ public class SqlUtils {
         return insert(t,null);
     }
 
-    /**
-     * @Author: Mr. Dai
-     * @Description: 根据指定对象插入数据
-     * @Date: 16:10 2023/4/1
-     * @param t
-     * @param handlerField 字段特殊处理
-     **/
-    public <T> int  insert(@NotNull T t,EmptyNotIgnore<T> handlerField){
+    public <T>void insertBatch(@NotNull T[] list){
+        insertBatch(list,null,BATCH_SIZE);
+    }
+
+    public <T>void insertBatch(@NotNull T[] list,EmptyNotIgnore<T> handlerField,int batchSize){
+        T t=list[0];
         /*根据条件获取执行的字段  并转成数组*/
         Set<String> fields = SqlBeanUtils.getFields(t, handlerField);
         String[] fieldArr = fields.toArray(new String[0]);
@@ -130,30 +147,52 @@ public class SqlUtils {
         //组装sql
         String sql = SqlAssembly.assembly(table, fieldArr, SqlStatus.INSERT);
 
+        Connection connection = getConnection();
 
-        List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
-        //存储字段值的容器
-        Map<String,Object> map=new HashMap<>();
-        for (SqlCondition sqlCondition : condition) {
-            map.put(sqlCondition.getName(),sqlCondition.getValue());
-        }
-
-        try(Connection connection = getConnection()) {
+        try {
             //获取预编译sql执行器
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            //预编译赋值
-            for(int i=0;i<fieldArr.length;i++){
-                preparedStatement.setObject(i+1,map.get(fieldArr[i]));
+            for(int i=0;i<list.length;i++){
+                T t1=list[i];
+                List<SqlCondition> condition = SqlBeanUtils.getCondition(t1);
+                //存储字段值的容器
+                Map<String,Object> map=new HashMap<>();
+                for (SqlCondition sqlCondition : condition) {
+                    map.put(sqlCondition.getName(),sqlCondition.getValue());
+                }
+                //预编译赋值
+                for(int k=0;k<fieldArr.length;k++){
+                    preparedStatement.setObject(k+1,map.get(fieldArr[k]));
+                }
+                //sql 语句打包到容器中
+                preparedStatement.addBatch();
+                if(i%batchSize==0){
+                    preparedStatement.executeBatch();
+                    preparedStatement.clearBatch();
+                }
             }
-            if (log.isInfoEnabled()) {
-                log.info(sql);
+            if(list.length%batchSize!=0){
+                preparedStatement.executeBatch();
+                preparedStatement.clearBatch();
             }
-            //执行sql
-            return preparedStatement.executeUpdate();
+            close(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    /**
+     * @Author: Mr. Dai
+     * @Description: 根据指定对象插入数据
+     * @Date: 16:10 2023/4/1
+     * @param t
+     * @param handlerField 字段特殊处理
+     **/
+    public <T> int  insert(@NotNull T t,EmptyNotIgnore<T> handlerField){
+        insertBatch((T[]) new Object[]{t},handlerField,1);
+        return 1;
     }
 
     /**
@@ -176,13 +215,15 @@ public class SqlUtils {
         if (log.isInfoEnabled()) {
             log.info(sql);
         }
-
-        try (Connection connection = getConnection()){
+        Connection connection = getConnection();
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             for(int i=0;i<sqlConditions.length;i++){
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
-            return  preparedStatement.executeUpdate();
+            int i = preparedStatement.executeUpdate();
+            close(connection);
+            return  i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -213,7 +254,8 @@ public class SqlUtils {
             log.info(buffer.toString());
         }
         ResultSet resultSet = null;
-        try (Connection connection = getConnection()){
+        Connection connection = getConnection();
+        try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(buffer.toString());
             for(int i=0;i<sqlConditions.length;i++){
@@ -224,6 +266,7 @@ public class SqlUtils {
             throw new RuntimeException(e);
         }
         try {
+            close(connection);
             return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -290,8 +333,8 @@ public class SqlUtils {
             log.info(sql);
         }
 
-
-        try (Connection connection = getConnection()){
+        Connection connection = getConnection();
+        try {
             //执行sql
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -304,7 +347,7 @@ public class SqlUtils {
 
             //获取临时结果集
             List<T> tempResult = assignValue(aClass, arrFields, resultSet);
-
+            close(connection);
             return tempResult;
 
         } catch (SQLException e) {
@@ -367,13 +410,19 @@ public class SqlUtils {
      * @Date: 21:49 2023/3/28
      **/
     private Connection getConnection(){
-        try {
-            Connection connection = dataSource.getConnection();
-            return connection;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        //查询是否开启了spring 事务处理
+        if (!TransactionSynchronizationManager.isSynchronizationActive()) {
+            try {
+                //没有正常获取连接
+                Connection connection = dataSource.getConnection();
+                return connection;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            //获取数据源对应的connection
+            Object resource = TransactionSynchronizationManager.getResource(dataSource);
+            return ((ConnectionHolder) resource).getConnection();
         }
     }
-
-
 }

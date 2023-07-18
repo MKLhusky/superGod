@@ -1,4 +1,4 @@
-package org.fd.superuser.controller;
+package org.fd.superuser.user;
 
 import com.system.supercommon.funcbean.R;
 import io.swagger.v3.oas.annotations.Operation;
@@ -6,13 +6,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.pojo.vo.UserInfoVO;
-import org.fd.superuser.service.UserService;
-import org.fd.superuser.serviceimpl.UserServiceImpl;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 @Tag(name = "UserController",description = "用户模块")
 public class UserController {
 
-    @Resource(type = UserServiceImpl.class)
-    private UserService userService;
+    private final UserService userService;
 
 
     /**
