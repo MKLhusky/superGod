@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.fd.dailyattendance.dailyAttendance.po.DailyAttendancePO;
 import org.fd.dailyattendance.dailyAttendance.service.DailyAttendanceService;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,4 +31,13 @@ public class DailyAttendanceController {
     }
 
 
+    @RequestMapping("/getName/{id}/{name}")
+    public R test(@PathVariable("id") String id, @PathVariable("name") String name){
+        return R.success();
+    }
+
+    @RequestMapping("/getName/{id}")
+    public R test(@PathVariable("id") String id){
+        return R.success();
+    }
 }

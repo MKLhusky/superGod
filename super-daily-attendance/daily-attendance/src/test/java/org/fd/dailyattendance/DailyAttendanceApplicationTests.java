@@ -8,9 +8,12 @@ import org.fd.dailyattendance.dailyAttendance.service.impl.DailyAttendanceServic
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+@EnableTransactionManagement
 @SpringBootTest
 class DailyAttendanceApplicationTests {
 
@@ -18,6 +21,7 @@ class DailyAttendanceApplicationTests {
     private DailyAttendanceServiceImpl dailyAttendanceService;
 
     @Test
+    @Transactional
     void contextLoads() {
         DailyAttendancePO dailyAttendance = new DailyAttendancePO();
         dailyAttendance.setId(SnowFlake.getId());
@@ -29,5 +33,4 @@ class DailyAttendanceApplicationTests {
         dailyAttendance.setEndTime(LocalDateTime.now());
         dailyAttendanceService.attendance(dailyAttendance);
     }
-
 }

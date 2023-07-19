@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = {"org.fd.**", "com.system.**"},exclude = {DataSourceAutoConfiguration.class})
 @ConfigurationPropertiesScan(basePackages = {"org.fd.**", "com.system.**", "com.alibaba.druid.spring.boot.autoconfigure"})
 public class DailyAttendanceApplication {
