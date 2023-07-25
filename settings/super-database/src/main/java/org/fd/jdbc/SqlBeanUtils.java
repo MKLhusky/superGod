@@ -3,15 +3,11 @@ package org.fd.jdbc;
 
 import com.system.supercommon.util.ReflectUtil;
 import com.system.supercommon.util.StringUtils;
-import org.fd.annotation.TableName;
 import org.springframework.util.ObjectUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.temporal.TemporalAdjuster;
 import java.util.ArrayList;
 import java.util.Date;

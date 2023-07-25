@@ -1,4 +1,4 @@
-package org.fd.annotation;
+package org.fd.jdbc;
 
 /**
  * @Description: 配合数据库jdbc工具类使用的注解  标注表名称

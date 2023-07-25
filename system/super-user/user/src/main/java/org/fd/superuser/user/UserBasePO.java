@@ -4,7 +4,7 @@ import com.system.supercommon.bean.BaseEntityPO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.fd.annotation.TableName;
+import org.fd.jdbc.TableName;
 import org.fd.userenum.IdentityEnum;
 import org.fd.userenum.SexEnum;
 import org.fd.userenum.StatusEnum;
