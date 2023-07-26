@@ -88,9 +88,9 @@ public class SqlBeanUtils {
                     if (null!=o) {
 
                         //时间类型暂时过滤掉
-                        if(Date.class.isAssignableFrom(o.getClass())|| TemporalAdjuster.class.isAssignableFrom(o.getClass())){
-                            continue;
-                        }
+//                        if(Date.class.isAssignableFrom(o.getClass())|| TemporalAdjuster.class.isAssignableFrom(o.getClass())){
+//                            continue;
+//                        }
 
                         SqlCondition selectCondition=new SqlCondition();
                         selectCondition.setName(declaredField.getName());
