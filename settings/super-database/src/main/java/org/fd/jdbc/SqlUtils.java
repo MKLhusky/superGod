@@ -116,8 +116,9 @@ public class SqlUtils {
             for(int i=0;i<fieldsValue.length;i++){
                 preparedStatement.setObject(i+1,map.get(fieldsValue[i]));
             }
+            int result = preparedStatement.executeUpdate();
             close(connection);
-            return preparedStatement.executeUpdate();
+            return result;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -204,9 +205,9 @@ public class SqlUtils {
     public <T> int delete(@NotNull T t){
         List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
 
-        if (null==condition||condition.size()<1) {
-            throw new RuntimeException("删除语句条件不能为null");
-        }
+//        if (null==condition||condition.size()<1) {
+//            throw new RuntimeException("删除语句条件不能为null");
+//        }
         String table = SqlBeanUtils.getTable(t.getClass(), null);
 
         SqlCondition[] sqlConditions = condition.toArray(new SqlCondition[0]);
@@ -240,9 +241,9 @@ public class SqlUtils {
      */
     public <T> boolean isExist(@NotNull T t){
         List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
-        if (null==condition||condition.size()<1) {
-            throw new RuntimeException("条件不能为null");
-        }
+//        if (null==condition||condition.size()<1) {
+//            throw new RuntimeException("条件不能为null");
+//        }
 
         String table = SqlBeanUtils.getTable(t.getClass(), null);
         StringBuffer buffer=new StringBuffer(String.format("select 1 from %s ",table));
@@ -266,12 +267,60 @@ public class SqlUtils {
             throw new RuntimeException(e);
         }
         try {
+            boolean flag = resultSet.next();
             close(connection);
-            return resultSet.next();
+            return flag;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
+    /**
+     * @Description: 根据条件判断数据是否存在
+     * @param t
+     * @return boolean
+     * @author Mr. Dai
+     * @date 2023/3/29 15:29
+     */
+    public <T> long getCount(@NotNull T t){
+        List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
+//        if (null==condition||condition.size()<1) {
+//            throw new RuntimeException("条件不能为null");
+//        }
+
+        String table = SqlBeanUtils.getTable(t.getClass(), null);
+        StringBuffer buffer=new StringBuffer(String.format("select count(*) from %s ",table));
+        SqlCondition[] sqlConditions = condition.toArray(new SqlCondition[0]);
+        SqlAssembly.assemblyCondition(buffer,sqlConditions);
+
+        if (log.isInfoEnabled()) {
+            log.info(buffer.toString());
+        }
+        ResultSet resultSet = null;
+        Connection connection = getConnection();
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement(buffer.toString());
+            for(int i=0;i<sqlConditions.length;i++){
+                preparedStatement.setObject(i+1,sqlConditions[i].getValue());
+            }
+            resultSet= preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            resultSet.next();
+            long result = resultSet.getLong(1);
+            close(connection);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     /**
      * @Author: Mr. Dai
