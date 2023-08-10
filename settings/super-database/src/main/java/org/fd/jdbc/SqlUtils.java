@@ -116,11 +116,11 @@ public class SqlUtils {
             for(int i=0;i<fieldsValue.length;i++){
                 preparedStatement.setObject(i+1,map.get(fieldsValue[i]));
             }
-            int result = preparedStatement.executeUpdate();
-            close(connection);
-            return result;
+            return preparedStatement.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(connection);
         }
     }
 
@@ -177,9 +177,10 @@ public class SqlUtils {
                 preparedStatement.executeBatch();
                 preparedStatement.clearBatch();
             }
-            close(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(connection);
         }
     }
 
@@ -222,11 +223,11 @@ public class SqlUtils {
             for(int i=0;i<sqlConditions.length;i++){
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
-            int i = preparedStatement.executeUpdate();
-            close(connection);
-            return  i;
+            return  preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(connection);
         }
     }
 
@@ -263,15 +264,11 @@ public class SqlUtils {
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
             resultSet= preparedStatement.executeQuery();
+            return resultSet.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        try {
-            boolean flag = resultSet.next();
+        }finally {
             close(connection);
-            return flag;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -307,16 +304,12 @@ public class SqlUtils {
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
             resultSet= preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             resultSet.next();
-            long result = resultSet.getLong(1);
-            close(connection);
-            return result;
+            return resultSet.getLong(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(connection);
         }
     }
 
@@ -395,12 +388,12 @@ public class SqlUtils {
             Class<T> aClass = (Class<T>) t.getClass();
 
             //获取临时结果集
-            List<T> tempResult = assignValue(aClass, arrFields, resultSet);
-            close(connection);
-            return tempResult;
+            return assignValue(aClass, arrFields, resultSet);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(connection);
         }
     }
 
