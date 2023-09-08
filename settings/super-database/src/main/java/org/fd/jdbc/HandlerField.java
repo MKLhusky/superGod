@@ -32,7 +32,10 @@ public abstract class HandlerField<T,R> {
     TypeFunction<T,R>[] typeFunctions;
 
     public boolean verify(Field field){
-       return Modifier.isStatic(field.getModifiers())||Modifier.isFinal(field.getModifiers());
+        return Modifier.isStatic(field.getModifiers())||
+                Modifier.isFinal(field.getModifiers())||
+                null!=field.getDeclaredAnnotation(TableName.class)||
+                !Modifier.isPrivate(field.getModifiers());
     }
 
 

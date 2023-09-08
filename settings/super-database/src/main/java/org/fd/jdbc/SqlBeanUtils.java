@@ -8,6 +8,7 @@ import org.springframework.util.ObjectUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.time.temporal.TemporalAdjuster;
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,6 +85,13 @@ public class SqlBeanUtils {
             Class temp=t.getClass();
             while (null!=temp&&!temp.equals(Object.class)){
                 for (Field declaredField : temp.getDeclaredFields()) {
+                    int modifiers = declaredField.getModifiers();
+                    if(Modifier.isStatic(modifiers)||
+                            Modifier.isFinal(modifiers)||
+                            !Modifier.isPrivate(modifiers)||
+                            null!=declaredField.getDeclaredAnnotation(TableName.class)){
+                        continue;
+                    }
                     Object o = ReflectUtil.getValue(declaredField,t);
                     if (null!=o) {
 

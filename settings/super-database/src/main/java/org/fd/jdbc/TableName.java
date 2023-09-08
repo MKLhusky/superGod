@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * @Author: Mr. Dai
  * @Date: 2023/7/18 20:17
  **/
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TableName {
