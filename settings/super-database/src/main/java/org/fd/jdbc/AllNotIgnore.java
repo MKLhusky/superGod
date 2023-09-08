@@ -3,6 +3,7 @@ package org.fd.jdbc;
 import com.system.supercommon.util.ReflectUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * Description: 全部字段 不忽略
@@ -16,6 +17,9 @@ public class AllNotIgnore<T> extends HandlerField<T,Object> {
         Class<?> tempClass = t.getClass();
         while (null!=tempClass&&!tempClass.equals(Object.class)){
             for (Field declaredField : tempClass.getDeclaredFields()) {
+                if (verify(declaredField)) {
+                    continue;
+                }
                 Object o = ReflectUtil.getValue(declaredField,t);
                 if(null!=o){
                     this.addField(declaredField.getName());

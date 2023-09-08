@@ -24,6 +24,9 @@ public class EmptyNotIgnore<T> extends HandlerField<T,Object> {
         Class<?> tempClass = t.getClass();
         while (null!=tempClass&&!tempClass.equals(Object.class)){
             for (Field declaredField : tempClass.getDeclaredFields()) {
+                if (verify(declaredField)) {
+                    continue;
+                }
                 Object o = ReflectUtil.getValue(declaredField,t);
                 String name = declaredField.getName();
                 if(null!=o){

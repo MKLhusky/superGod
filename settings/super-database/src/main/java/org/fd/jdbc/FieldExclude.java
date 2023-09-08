@@ -19,6 +19,9 @@ public class FieldExclude<T> extends HandlerField<T,Object> {
         Class<?> tempClass = t.getClass();
         while (null!=tempClass&&!tempClass.equals(Object.class)){
             for (Field declaredField : tempClass.getDeclaredFields()) {
+                if (verify(declaredField)) {
+                    continue;
+                }
                 if (!this.fields.contains(declaredField.getName())) {
                     this.addField(declaredField.getName());
                 }

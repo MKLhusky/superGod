@@ -5,8 +5,10 @@ import com.system.supercommon.util.ReflectUtil;
 import java.beans.Introspector;
 import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -28,6 +30,11 @@ public abstract class HandlerField<T,R> {
 
     //获取字段的lambda集合
     TypeFunction<T,R>[] typeFunctions;
+
+    public boolean verify(Field field){
+       return Modifier.isStatic(field.getModifiers())||Modifier.isFinal(field.getModifiers());
+    }
+
 
     public HandlerField(TypeFunction<T,R>... typeFunctions){
         this.typeFunctions=typeFunctions;

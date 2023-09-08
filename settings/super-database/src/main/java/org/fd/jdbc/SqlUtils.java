@@ -13,7 +13,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Description: 项目sql攻击类
@@ -420,10 +424,18 @@ public class SqlUtils {
 
             for(int i=0;i<field.length;i++){
                 Field field1 = ReflectUtil.getField(t, field[i]);
-                if (field1.getType().isEnum()) {
+                Class<?> type = field1.getType();
+                if (type.isEnum()) {
                     //处理枚举对象
                     ReflectUtil.setValue(field1,t, EnumUtils.getEnum((Class<? extends Enum>) field1.getType(),set.getInt(i+1)));
-                }else{
+                }else if(Date.class.isAssignableFrom(type)){
+                    java.sql.Date date = set.getDate(i + 1);
+                    ReflectUtil.setValue(field1,t,new Date(date.getTime()));
+                }else if(LocalDateTime.class.isAssignableFrom(type)){
+                    java.sql.Date date = set.getDate(i + 1);
+                    Instant instant = Instant.ofEpochMilli(date.getTime());
+                    ReflectUtil.setValue(field1,t,LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
+                } else{
                     ReflectUtil.setValue(field[i],t,set.getObject(i+1));
                 }
             }
