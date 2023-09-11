@@ -3,7 +3,6 @@ package org.fd.mybatis;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.fd.jdbc.SqlUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

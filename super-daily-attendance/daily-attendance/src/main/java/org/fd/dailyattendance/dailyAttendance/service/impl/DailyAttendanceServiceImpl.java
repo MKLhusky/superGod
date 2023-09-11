@@ -6,9 +6,7 @@ import org.fd.dailyattendance.dailyAttendance.po.DailyAttendancePO;
 import org.fd.dailyattendance.dailyAttendance.service.DailyAttendanceService;
 import org.fd.jdbc.SqlUtils;
 import org.fd.redis.RedisUtil;
-import org.fd.redis.dataStructure.Student2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -85,8 +83,6 @@ public class DailyAttendanceServiceImpl implements DailyAttendanceService {
 
 
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
-        Student2 skipList = newInter();
-        System.out.println(skipList);
     }
 
 }

@@ -6,18 +6,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.Date;
 
 /**
  * Description: 项目sql攻击类
@@ -30,7 +30,7 @@ public class SqlUtils {
 
     private DataSource dataSource;
 
-    private static int BATCH_SIZE=1000;
+    private static int BATCH_SIZE=3000;
 
 
     public SqlUtils(DataSource dataSource) {
@@ -44,7 +44,7 @@ public class SqlUtils {
      * @param t
      * @param fieldSelect 指定要作为条件的字段
      **/
-    public <T> int update(@NotNull T t,FieldSelect<T> fieldSelect){
+    public <T> int update(@NotNull T t, FieldSelect<T> fieldSelect){
         return update(t,null,fieldSelect);
     }
 
@@ -59,22 +59,21 @@ public class SqlUtils {
         }
     }
 
-    /**
-     * @Author: Mr. Dai
-     * @Description:
-     * @Date: 17:16 2023/4/1
-     * @param t
-     * @param handlerField 为null 也要处理的字段
-     * @param fieldSelect  指定要作为条件的字段
-     **/
-    public <T> int update(@NotNull T t,EmptyNotIgnore<T> handlerField,FieldSelect<T> fieldSelect){
+    public <T> void updateBatch(@NotNull T[] t,FieldSelect<T> fieldSelect){
+        updateBatch(t,null,fieldSelect);
+    }
 
+    public <T> void updateBatch(@NotNull T[] t,EmptyNotIgnore<T> emptyNotIgnore,FieldSelect<T> fieldSelect){
+        updateBatch(t,emptyNotIgnore,fieldSelect,BATCH_SIZE);
+    }
+
+    public <T> void updateBatch(@NotNull T[] t,EmptyNotIgnore<T> emptyNotIgnore,FieldSelect<T> fieldSelect,int batchSize){
         if(null==fieldSelect){
             throw new RuntimeException("更新必须指定条件字段");
         }
 
-        Set<String> fields = SqlBeanUtils.getFields(t, handlerField);
-        Set<String> selectField = SqlBeanUtils.getFields(t, fieldSelect);
+        Set<String> fields = SqlBeanUtils.getFields(t[0], emptyNotIgnore);
+        Set<String> selectField = SqlBeanUtils.getFields(t[0], fieldSelect);
 
         //删除掉作为条件的字段
         for (String s : selectField) {
@@ -83,14 +82,6 @@ public class SqlUtils {
         if (fields.size()<1) {
             throw new RuntimeException("(去除条件)无可更新的字段");
         }
-        //获取有值的字段
-        List<SqlCondition> condition = SqlBeanUtils.getCondition(t);
-        //用户条件编译取值的容器
-        Map<String,Object> map=new HashMap<>();
-        for (SqlCondition sqlCondition : condition) {
-            map.put(sqlCondition.getName(),sqlCondition.getValue());
-        }
-
         String[] fieldArr = fields.toArray(new String[0]);
 
         //获取条件字段
@@ -103,29 +94,68 @@ public class SqlUtils {
         }
 
         //获取表名称
-        String table = SqlBeanUtils.getTable(t.getClass(), null);
+        String table = SqlBeanUtils.getTable(t[0].getClass(), null);
         String sql = SqlAssembly.assembly(table, fieldArr, SqlStatus.UPDATE,temp);
-        if (log.isInfoEnabled()) {
-            log.info(sql);
-        }
+
+        printLogSql(sql);
+
         Connection connection = getConnection();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+
             //更新的值 和条件值都需要在预编译中填充,所以2个按顺序合并
             String[] fieldsValue=new String[fieldArr.length+conditionField.length];
 
             System.arraycopy(fieldArr,0,fieldsValue,0,fieldArr.length);
             System.arraycopy(conditionField,0,fieldsValue,fieldArr.length,conditionField.length);
 
-            for(int i=0;i<fieldsValue.length;i++){
-                preparedStatement.setObject(i+1,map.get(fieldsValue[i]));
+            for(int i=0;i<t.length;i++){
+                T t1=t[i];
+                //获取有值的字段
+                List<SqlCondition> condition = SqlBeanUtils.getCondition(t1);
+                //用户条件编译取值的容器
+                Map<String,Object> map=new HashMap<>();
+                for (SqlCondition sqlCondition : condition) {
+                    map.put(sqlCondition.getName(),sqlCondition.getValue());
+                }
+                for(int k=0;k<fieldsValue.length;k++){
+                    preparedStatement.setObject(k+1,map.get(fieldsValue[k]));
+                }
+                preparedStatement.addBatch();
+
+                preparedStatement.addBatch();
+                if(i%batchSize==0){
+                    preparedStatement.executeBatch();
+                    preparedStatement.clearBatch();
+                }
             }
-            return preparedStatement.executeUpdate();
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
+
+            if(t.length%batchSize!=0){
+                preparedStatement.executeBatch();
+                preparedStatement.clearBatch();
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
         }finally {
             close(connection);
         }
+    }
+
+
+
+    /**
+     * @Author: Mr. Dai
+     * @Description:
+     * @Date: 17:16 2023/4/1
+     * @param t
+     * @param handlerField 为null 也要处理的字段
+     * @param fieldSelect  指定要作为条件的字段
+     **/
+    public <T> int update(@NotNull T t,EmptyNotIgnore<T> handlerField,FieldSelect<T> fieldSelect){
+        updateBatch((T[])new Object[]{t},handlerField,fieldSelect);
+        return 1;
     }
 
     /**
@@ -151,6 +181,8 @@ public class SqlUtils {
         String table = SqlBeanUtils.getTable(t.getClass(), null);
         //组装sql
         String sql = SqlAssembly.assembly(table, fieldArr, SqlStatus.INSERT);
+
+        printLogSql(sql);
 
         Connection connection = getConnection();
 
@@ -218,9 +250,8 @@ public class SqlUtils {
         SqlCondition[] sqlConditions = condition.toArray(new SqlCondition[0]);
         String sql = SqlAssembly.assembly(table, null, SqlStatus.DELETE, sqlConditions);
 
-        if (log.isInfoEnabled()) {
-            log.info(sql);
-        }
+        printLogSql(sql);
+
         Connection connection = getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -251,19 +282,18 @@ public class SqlUtils {
 //        }
 
         String table = SqlBeanUtils.getTable(t.getClass(), null);
-        StringBuffer buffer=new StringBuffer(String.format("select 1 from %s ",table));
+        StringBuffer sql=new StringBuffer(String.format("select 1 from %s ",table));
         SqlCondition[] sqlConditions = condition.toArray(new SqlCondition[0]);
-        SqlAssembly.assemblyCondition(buffer,sqlConditions);
-        buffer.append(" limit 1");
+        SqlAssembly.assemblyCondition(sql,sqlConditions);
+        sql.append(" limit 1");
 
-        if (log.isInfoEnabled()) {
-            log.info(buffer.toString());
-        }
+        printLogSql(sql.toString());
+
         ResultSet resultSet = null;
         Connection connection = getConnection();
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(buffer.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             for(int i=0;i<sqlConditions.length;i++){
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
@@ -292,18 +322,17 @@ public class SqlUtils {
 //        }
 
         String table = SqlBeanUtils.getTable(t.getClass(), null);
-        StringBuffer buffer=new StringBuffer(String.format("select count(*) from %s ",table));
+        StringBuffer sql=new StringBuffer(String.format("select count(*) from %s ",table));
         SqlCondition[] sqlConditions = condition.toArray(new SqlCondition[0]);
-        SqlAssembly.assemblyCondition(buffer,sqlConditions);
+        SqlAssembly.assemblyCondition(sql,sqlConditions);
 
-        if (log.isInfoEnabled()) {
-            log.info(buffer.toString());
-        }
+        printLogSql(sql.toString());
+
         ResultSet resultSet = null;
         Connection connection = getConnection();
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(buffer.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             for(int i=0;i<sqlConditions.length;i++){
                 preparedStatement.setObject(i+1,sqlConditions[i].getValue());
             }
@@ -314,6 +343,12 @@ public class SqlUtils {
             throw new RuntimeException(e);
         }finally {
             close(connection);
+        }
+    }
+
+    private void printLogSql(String sql){
+        if(log.isInfoEnabled()){
+            log.info(sql);
         }
     }
 
@@ -375,9 +410,7 @@ public class SqlUtils {
         //拼装sql
         String sql = SqlAssembly.assembly(SqlBeanUtils.getTable(t.getClass(), null), arrFields, SqlStatus.QUERY, sqlConditions);
 
-        if (log.isInfoEnabled()) {
-            log.info(sql);
-        }
+        printLogSql(sql);
 
         Connection connection = getConnection();
         try {
@@ -421,22 +454,31 @@ public class SqlUtils {
             }catch (Exception e){
                 throw new RuntimeException("获取无参构造失败,无法实例化对象");
             }
-
             for(int i=0;i<field.length;i++){
                 Field field1 = ReflectUtil.getField(t, field[i]);
+
                 Class<?> type = field1.getType();
+
                 if (type.isEnum()) {
                     //处理枚举对象
                     ReflectUtil.setValue(field1,t, EnumUtils.getEnum((Class<? extends Enum>) field1.getType(),set.getInt(i+1)));
-                }else if(Date.class.isAssignableFrom(type)){
+                }else if (Date.class.isAssignableFrom(type)){
                     java.sql.Date date = set.getDate(i + 1);
-                    ReflectUtil.setValue(field1,t,new Date(date.getTime()));
-                }else if(LocalDateTime.class.isAssignableFrom(type)){
+                    ReflectUtil.setValue(field1,t,ObjectUtils.isEmpty(date)?null:new Date((date.getTime())));
+                }else if (LocalDateTime.class.isAssignableFrom(type)){
+
                     java.sql.Date date = set.getDate(i + 1);
-                    Instant instant = Instant.ofEpochMilli(date.getTime());
-                    ReflectUtil.setValue(field1,t,LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
-                } else{
-                    ReflectUtil.setValue(field[i],t,set.getObject(i+1));
+                    ReflectUtil.setValue(field1,t,
+                            ObjectUtils.isEmpty(date)?null:
+                                    LocalDateTime.ofInstant(
+                                            Instant.ofEpochMilli(
+                                                    date.getTime()
+                                            ),
+                                            ZoneId.systemDefault()
+                                    )
+                    );
+                }else{
+                    ReflectUtil.setValue(field1,t,set.getObject(i+1));
                 }
             }
             result.add(t);
