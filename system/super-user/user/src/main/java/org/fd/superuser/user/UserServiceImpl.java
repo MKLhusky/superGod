@@ -8,6 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.fd.jdbc.FieldSelect;
 import org.fd.jdbc.FieldExclude;
+import org.fd.jdbc.SqlUtils;
 import org.fd.pojo.dto.UserLoginDTO;
 import org.fd.pojo.vo.UserInfoVO;
 import org.springframework.beans.BeanUtils;
