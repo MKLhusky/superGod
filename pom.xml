@@ -43,6 +43,8 @@
         <module>system</module>
         <module>system/super-common</module>
         <module>system/super-system</module>
+        <!--rpc过程调用 -->
+        <module>system/super-rpc</module>
         <!--打卡系统-->
         <module>super-daily-attendance</module>
         <module>super-daily-attendance/interface-api</module>
