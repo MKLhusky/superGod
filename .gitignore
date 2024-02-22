@@ -5,3 +5,4 @@ target
 /.idea/*.xml
 *.iml
 dist
+*.lock
