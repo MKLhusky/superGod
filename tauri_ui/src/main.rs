@@ -1,7 +1,8 @@
 mod view;
-mod func;
 use leptos::*;
 use view::*;
+mod func;
+
 
 fn main() {
     mount_to_body(|| {

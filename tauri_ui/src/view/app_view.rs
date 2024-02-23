@@ -1,24 +1,19 @@
 
 use leptos::*;
 use crate::func::*;
+use crate::console_log;
 
 
 #[component]
 pub fn App() -> impl IntoView {
-
-    let (count, set_count) =create_signal(0);
-
     view! {
         <main>
         <button
-            on:click = move |_| {
-            // set_count.set(3);
-            set_count.update(|e| *e += 2);
-            // alert("调用到了");
+            on:click = move |_|  {
+            console_log!("你是: {}","张三");
         }
         >
-        "Click me:"
-        {move || count.get()}
+        "Click me"
         </button>
         </main>
     }
