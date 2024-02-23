@@ -9,6 +9,14 @@ fn print(text: &str){
 
 fn main() {
     tauri::Builder::default()
+        .on_window_event(|e|{
+            match e.event() {
+                tauri::WindowEvent::CloseRequested {api{true}} => {
+                        println!("{}","窗口关闭");
+                },
+                _ => {}
+            }
+        })
         .invoke_handler(tauri::generate_handler![print])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
