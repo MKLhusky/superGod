@@ -11,8 +11,8 @@ fn main() {
     tauri::Builder::default()
         .on_window_event(|e|{
             match e.event() {
-                tauri::WindowEvent::CloseRequested {api{true}} => {
-                        println!("{}","窗口关闭");
+                tauri::WindowEvent::CloseRequested {..} => {
+                    println!("{}","窗口关闭");
                 },
                 _ => {}
             }

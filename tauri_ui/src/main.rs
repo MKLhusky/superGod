@@ -1,7 +1,10 @@
 mod view;
-use leptos::*;
-use view::*;
 mod func;
+
+use view::login::*;
+use func::native::*;
+use leptos::*;
+
 
 
 fn main() {
