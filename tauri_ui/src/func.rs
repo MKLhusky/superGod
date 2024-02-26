@@ -23,11 +23,12 @@ pub mod native {
     #[macro_export]
     macro_rules! console_log {
     ($($t:tt)*) => (
-        use serde_wasm_bindgen::to_value;
         let  x = &format_args!($($t)*).to_string();
         log(x);
         #[cfg(feature = "gui")] {
+            log("打印了");
             use crate::func::native::invoke;
+            use serde_wasm_bindgen::to_value;
             let  arg = to_value(&PrintText{text:x}).unwrap();
             invoke("print",arg).as_string().unwrap();
         }
