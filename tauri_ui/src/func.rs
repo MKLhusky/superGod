@@ -9,6 +9,10 @@ pub mod native {
         #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
         pub fn invoke(cmd: &str, args: JsValue) -> JsValue;
 
+        // #[cfg(feature = "gui")]
+        // #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "os"])]
+        // pub fn arch() -> JsValue;
+
         //绑定的js的console.log
         #[wasm_bindgen(js_namespace = console)]
         pub fn log(s: &str);
@@ -23,14 +27,13 @@ pub mod native {
     #[macro_export]
     macro_rules! console_log {
     ($($t:tt)*) => (
+        use crate::func::native::log;
         let  x = &format_args!($($t)*).to_string();
         log(x);
         #[cfg(feature = "gui")] {
-            log("打印了");
-            use crate::func::native::invoke;
             use serde_wasm_bindgen::to_value;
             let  arg = to_value(&PrintText{text:x}).unwrap();
-            invoke("print",arg).as_string().unwrap();
+            invoke("print",arg);
         }
     )
     }

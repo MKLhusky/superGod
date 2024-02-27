@@ -2,7 +2,6 @@ mod view;
 mod func;
 
 use view::login::*;
-use func::native::*;
 use leptos::*;
 
 
