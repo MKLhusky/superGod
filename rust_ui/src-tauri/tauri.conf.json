@@ -1,34 +1,28 @@
 {
   "build": {
-    "beforeDevCommand": "trunk serve --features gui",
-    "beforeBuildCommand": "trunk build --features gui",
+    "beforeDevCommand": "trunk serve",
+    "beforeBuildCommand": "trunk build --release",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "tauri_ui",
+    "productName": "rust_ui",
     "version": "0.0.0"
   },
-
   "tauri": {
     "allowlist": {
       "all": false,
       "shell": {
         "all": false,
         "open": true
-      },
-      "os": {
-        "all": true
       }
     },
     "windows": [
       {
-        "title": "my_app",
-        "width": 1200,
-        "height": 800,
-        "center": true,
-        "resizable": false
+        "title": "rust_ui",
+        "width": 800,
+        "height": 600
       }
     ],
     "security": {
@@ -37,7 +31,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "dqm",
+      "identifier": "com.tauri.dqm",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
