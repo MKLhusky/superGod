@@ -1,6 +1,6 @@
 {
   "build": {
-    "beforeDevCommand": "trunk serve",
+    "beforeDevCommand": "trunk serve --features gui",
     "beforeBuildCommand": "trunk build --release",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
@@ -16,6 +16,9 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "os":{
+        "all": true
       }
     },
     "windows": [
