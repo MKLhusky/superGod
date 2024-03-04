@@ -7,29 +7,25 @@ pub mod login {
     use crate::func::native::*;
     use crate::console_log;
 
+    // let click= move |_| {
+    //     console_log!("{}",get_name());
+    //     console_log!("{}",get_today());
+    //
+    //     spawn_local_scoped(cx, async move {
+    //     console_log!("{}","异步执行了");
+    //     #[cfg(feature = "gui")]{
+    //     let os_name=&(arch().await).as_string().unwrap();
+    //     console_log!("{}",os_name);
+    //     }
+    //     })
+    // };
+
     #[component]
     pub fn App<G: Html>(cx: Scope) -> View<G> {
 
-        let click= move |_| {
-            console_log!("{}",get_name());
-            console_log!("{}",get_today());
-
-            spawn_local_scoped(cx, async move {
-                console_log!("{}","异步执行了");
-                #[cfg(feature = "gui")]{
-                    let os_name=&(arch().await).as_string().unwrap();
-                    console_log!("{}",os_name);
-                }
-            })
-        };
 
         view! { cx,
-        button(on:click =click ){
-                "Click me"
-            }
-        p{
-            "你好牛逼"
+
         }
-    }
     }
 }
