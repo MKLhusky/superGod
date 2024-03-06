@@ -1,32 +1,3 @@
-h1 {
+ul > p:first-child {
     color: red;
-}
-
-p{
-    color: green;
-}
-
-li {
-    list-style-type: none;
-}
-
-.li2 {
-    color: orange;
-    font-weight: bold;
-}
-
-li em {
-    color: antiquewhite;
-}
-
-a:link {
-    color: pink;
-}
-
-a:visited {
-    color: red;
-}
-
-a:hover {
-    text-decoration: none;
 }

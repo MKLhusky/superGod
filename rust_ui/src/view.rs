@@ -24,31 +24,20 @@ pub mod login {
     pub fn App<G: Html>(cx: Scope) -> View<G> {
 
         view! { cx,
-            h1 {
-                "我是一级标题"
-            }
-            p {
-                "这是一个段落文本，在文本中有一个"
-                span (class = "li2"){
-                    "span element"
-                }
-                "并且还有一个"
-                a ( href = "https://www.baidu.com", target = "_blank") {
-                    "链接"
-                }
-            }
-
-            p {
-                "这是第二段。 包含了一个"
-                em {
-                    "强调"
-                }
-                "元素。"
-            }
             ul {
-                li {"项目1"}
-                li ( class = "li2"){"项目2"}
-                li { "项目" em {"3"}}
+                p{
+                    li ( class = "li"){"项目1"}
+                    li ( class = "li2c"){"项目2"}
+                    li ( class = "li 2ab"){ "项目" em {"3"}}
+                    li {"项目4"}
+                }
+                p{
+                    li ( class = "li"){"项目5"}
+                    li ( class = "li2c"){"项目6"}
+                    li ( class = "li 2ab"){ "项目" em {"7"}}
+                    li {"项目8"}
+                }
+
             }
         }
     }
