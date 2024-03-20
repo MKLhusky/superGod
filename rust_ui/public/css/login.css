@@ -1,0 +1,39 @@
+.box {
+    display: grid;
+    height: calc(100vh - 2vh);
+    width: calc( 100vw - 1vw);
+    grid-template-columns: 20% auto 20%;
+    grid-template-rows: 1fr 4fr 1fr ;
+    grid-template-areas:
+            'h h h'
+            'l m r'
+            'f f f';
+}
+
+header {
+    grid-area: h;
+    background-color: yellow;
+}
+
+.left {
+    grid-area: l;
+    background-color: blue;
+}
+
+main {
+    grid-area: m;
+    background-color: pink;
+}
+
+.right {
+    grid-area: r;
+    background-color: blueviolet;
+}
+
+footer {
+    grid-area: f;
+    background-color: chartreuse;
+}
+
+
+

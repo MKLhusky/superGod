@@ -25,7 +25,13 @@ pub mod login {
     //     })
 
         view! { cx,
-
+            div(class = "box") {
+                header {"头部"}
+                aside ( class = "left") {"左边"}
+                main {"主体内容"}
+                aside ( class = "right" ) {"右边"}
+                footer {"底部"}
+            }
         }
     }
 }
